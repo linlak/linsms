@@ -1,0 +1,13 @@
+<div class="container-fluid">
+	<div class="row">
+		<span side-toggle toggle="toggle"></span>
+ 		<span side-toggle-label toggle="toggle"></span>
+		<div class="col-12 col-sm-3 col-md-3" id="sidenav">
+			<div ui-view="adminnav"></div>
+		</div>
+		<div class="col-12 col-sm-9 col-md-9">
+			<div ui-view="adminhead"></div>
+			<div ui-view="admin"></div>
+		</div>
+	</div>
+</div>

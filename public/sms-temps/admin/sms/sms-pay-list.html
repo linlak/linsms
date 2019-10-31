@@ -1,0 +1,107 @@
+<h3 class="text-center text-capitalize my-2">{{sub_title}}</h3>
+<div class="row">
+    <div class="col-12">
+        <div class="input-group mb-2">
+            <select ng-model="search.type" class="form-control">
+                <option value="">All</option>
+                <option value="1">Pending</option>
+                <option value="2">Depleted</option>
+                <option value="3">Verified</option>
+                <option value="4">Suspended</option>
+            </select>
+            <input type="text" name="paysearch" ng-model="search.item" class="form-control"
+                placeholder="Search Payments">
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="activation">
+    <form class="form" autocomplete="off" novalidate ng-submit="actPay()">
+		<div class="form-group">
+			<div>
+				<select name="" ng-class="{'is-invalid':errs.p_mtd}" class="form-control" ng-model="pay_form.p_mtd">
+					<option value="">Select</option>
+					<option value="cash">Cash</option>
+					<option value="airtel">Airtel Money</option>
+					<option value="mtn">MTN Mobile Money</option>
+				</select>
+				<span class="invalid-feedback" role="alert" ng-if="errs.p_mtd">{{errs.p_mtd[0]}}</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<div>
+				<input type="text" ng-class="{'is-invalid':errs.p_phone}" class="form-control" name="" placeholder="Phone"
+					ng-model="pay_form.p_phone">
+					<span class="invalid-feedback" role="alert" ng-if="errs.p_phone">{{errs.p_phone[0]}}</span>
+			</div>
+		</div>
+		<div class="form-group" ng-show="pay_form.p_mtd!=='cash'">
+			<div>
+				<input type="text" ng-class="{'is-invalid':errs.trans_id}" class="form-control" name="" placeholder="Trans Id"
+					ng-model="pay_form.trans_id">
+					<span class="invalid-feedback" role="alert" ng-if="errs.trans_id">{{errs.trans_id[0]}}</span>
+			</div>
+		</div>
+		<div class="form-group clearfix">
+			<div>
+				<input type="submit" class="btn btn-sm btn-success float-right" name="submit" value="Activate">
+			</div>
+		</div>
+	</form>
+</script>
+<script type="text/ng-template" id="reactivation">
+    <p class="text-center">Payment suspended <br><q>{{cur_pay.reason}}</q></p>
+	<button class="btn btn-sm btn-success mb-3" ng-click="actDelReact('reactivate')">Reactivate</button><br>
+	<button class="btn btn-sm btn-danger"  ng-click="actDelReact('del')">Delete</button>
+</script>
+<script type="text/ng-template" id="suspend">
+    <form class="form mt-3" autocomplete="off" novalidate ng-submit="actSuspend()">
+		<div class="form-group">
+			<div>
+				<textarea name="reason" class="form-control" ng-model="pay_form.reason" ng-class="{'is-invalid':errs.reason}"
+				    placeholder="Enter Reason..."></textarea>
+				<span class="invalid-feedback" role="alert" ng-if="errs.reason">{{errs.reason[0]}}</span>
+			</div>
+		</div>
+		<div class="form-group clearfix">
+			<div>
+				<input type="submit" name="submit" class="btn btn-sm btn-warning float-right" value="Suspend">
+			</div>
+		</div>
+	</form>
+</script>
+<script type="text/ng-template" id="pay-details">
+    <button class="btn btn-sm btn-danger float-left" ng-click="cancelDet()">X</button>
+	<h4 class="text-center">Manage Payment</h4>
+	<div class="row">
+		<div class="col-sm-8">
+			<h4>Details</h4>
+			<p>
+				<b>UserName:</b>&nbsp;{{cur_pay.username}}&nbsp;<br>
+				<b>Ref:</b>&nbsp;{{cur_pay.p_ref}}&nbsp;<br>
+				<b>No of SMS:</b>&nbsp;{{cur_pay.sms_count}}&nbsp;<br>
+				<b>Amount:</b>&nbsp;{{cur_pay.sms_price|customCurrency:'/=':false}}&nbsp;<br>
+				<b>Initiated:</b>&nbsp; {{cur_pay.start_date}}&nbsp;<br>
+				<b>Verified: </b>&nbsp;{{cur_pay.verify||'N/A'}}&nbsp;&nbsp;
+			</p>
+		</div>
+		<div class="col-sm-4">
+			<h4>Actions</h4>
+			<div ng-include="loadAction(cur_pay.status)"></div>
+		</div>
+	</div>
+</script>
+<script type="text/ng-template" id="list-item">
+    <p>
+		<b>UserName:</b>&nbsp;{{pay.username}}&nbsp;
+		<b>Ref:</b>&nbsp;{{pay.p_ref}}&nbsp;
+		<b>No of SMS:</b>&nbsp;{{pay.sms_count}}&nbsp;
+		<b>Amount:</b>&nbsp;{{pay.sms_price|customCurrency:'/=':false}}&nbsp;
+		<b>Initiated:</b>&nbsp; {{pay.start_date}}&nbsp;
+		<b>Verified: </b>&nbsp;{{pay.verify||'N/A'}}&nbsp;&nbsp;<strong class="text-dark">Manage..</strong>
+	</p>
+</script>
+<div class="list-group" ng-show="payments.length">
+    <div class="list-group-item bg-primary my-1 shadow-sm" ng-repeat="pay in payments" ng-include="showTemp(pay,$index)"
+        ng-click="showDet(pay,$index)"></div>
+</div>

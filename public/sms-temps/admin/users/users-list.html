@@ -1,0 +1,69 @@
+<div class="row">
+    <div class="col-sm-12">
+        <h3 class="text-center">{{title||'All Users'}}</h3>
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="thead-dark">
+                    <th>Full Name</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Status</th>
+                    <th>Registered</th>
+                    <th>Last Seen</th>
+                </thead>
+                <tbody>
+                    <script type="text/ng-template" id="list">
+                        <td>{{user.full_name}}</td>
+						<td>{{user.username}}</td>
+						<td>{{user.email}}</td>
+						<td>{{user.phone}}</td>
+						<td>
+							<span class="text-success" ng-show="user.status=='1'">Verified</span>
+							<span class="text-warning" ng-show="user.status=='0'">Pending</span>
+							<span class="text-danger"  ng-show="user.status=='2'">Suspended</span>
+						</td>
+						<td>{{user.reg_date}}</td>
+						<td>{{user.last_seen}}</td>
+					</script>
+                    <script type="text/ng-template" id="user-details">
+                        <td colspan="{{cur_user.id===l_user.getUserid()?7:4}}">
+							<button class="btn btn-sm btn-danger float-left my-2" ng-click="cancelDet()">X</button>
+							<h3 class="text-center my-2">User Details</h3>
+							<p><b>Name:</b>&nbsp;{{cur_user.full_name}}</p>
+							<p><b>Gender:</b>&nbsp;{{cur_user.gender}}</p>
+							<p><b>Email:</b>&nbsp;{{cur_user.email}}</p>
+							<p><b>Username:</b>&nbsp;{{cur_user.username}}</p>
+							<p><b>Phone:</b>&nbsp;{{cur_user.phone}}</p>
+							<p><b>Country:</b>&nbsp;{{cur_user.country}}</p>
+							<p><b>Status:</b>&nbsp;
+								<span class="text-success" ng-show="cur_user.status=='1'">Verified</span>
+								<span class="text-warning" ng-show="cur_user.status=='0'">Pending</span>
+								<span class="invalid-feedback" role="alert" ng-show="cur_user.status=='2'">Suspended</span>
+							</p>
+							<p><b>Registered:</b>&nbsp;{{cur_user.reg_date}}</p>
+							<p><b>Member For:</b>&nbsp;{{cur_user.mbr}}</p>
+							<p><b>Last Seen:</b>&nbsp;{{cur_user.last_seen}}</p>
+						</td>
+						<td colspan="{{cur_user.id===l_user.getUserid()?0:3}}" ng-hide="cur_user.id===l_user.getUserid()">
+							<h3 class="text-center my-2">Actions</h3>
+							<div ng-show="cur_user.status==='0'">
+								<button class="btn btn-block btn-primary" ng-hide="cur_user.id===l_user.getUserid()" ng-click="notify()">Resend </button>
+								<button class="btn btn-block btn-danger" ng-hide="cur_user.id===l_user.getUserid()" ng-click="romove()">Delete</button>
+							</div>
+							<div ng-show="cur_user.status==='1'">
+								<button class="btn btn-block btn-warning" ng-hide="cur_user.id===l_user.getUserid()" ng-click="suspendUser()">Suspend</button>
+							</div>
+							<div ng-show="cur_user.status==='2'">
+								<button class="btn btn-block btn-success" ng-hide="cur_user.id===l_user.getUserid()" ng-click="enUser()">Enable </button>
+								<button class="btn btn-block btn-danger" ng-hide="cur_user.id===l_user.getUserid()" ng-click="romove()">Delete</button>
+							</div>
+						</td>
+					</script>
+                    <tr ng-repeat="user in users" ng-click="showUser(user,$index)" ng-include="showTemp(user,$index)">
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

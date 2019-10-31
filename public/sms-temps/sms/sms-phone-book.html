@@ -1,0 +1,85 @@
+<div class="row">
+    <div class="col-12">
+        <h3 class="text-center">Phone Book</h3>
+        <div class="row">
+            <div class=" col-12 col-sm-6 offset-sm-3 my-3">
+                <form class="form-inline" autocomplete="off" novalidate ng-submit="saveItem()">
+                    <div class="form-group">
+                        <label class="cotrol-label sr-only">Group Title</label><span class="invalid-feedback"
+                            role="alert">{{errs.title[0]}}</span>
+                        <div>
+                            <input type="text" name="group" ng-model="phn.group" placeholder="Group Title"
+                                ng-class="{'is-invalid':errs.title}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <input type="submit" class="btn  btn-success" name="submit" ng-disabled="isSubmiting"
+                                value="{{phn.action||'Create'}}">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="table-responsive-sm">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <th>
+                                <label>
+                                    <input type="checkbox" ng-model="check_all" ng-false-value="0" ng-true-value="1"
+                                        ng-change="addSelection()" ng-disabled="!groups.length">
+                                    All
+                                </label>
+                            </th>
+                            <th>Title</th>
+                            <th>Contacts</th>
+                            <th>Created</th>
+                            <th>Updated</th>
+                            <th colspan="4">Actions</th>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="grp in groups track by $index">
+                                <td><input type="checkbox" name="{{grp.title+$index}}" checklist-model="el.selection"
+                                        checklist-change="check_change()" checklist-value="grp.id" /></td>
+                                <td>{{grp.title}}</td>
+                                <td>{{grp.contacts}}</td>
+                                <td>{{grp.created}}</td>
+                                <td>{{grp.last_updated}}</td>
+                                <td><button class="btn btn-sm btn-dark" ng-disabled="isSubmiting||grp.contacts==0"
+                                        ng-click="exportGroup(grp)" uib-tooltip="Export Contacts"
+                                        trigger="mouseenter"><span class="fa fa-download"></span></button> </td>
+                                <td><button class="btn btn-sm btn-info" ng-disabled="isSubmiting"
+                                        ng-click="editItem(grp)" uib-tooltip="Edit Group" trigger="mouseenter"><span
+                                            class="fa fa-edit"></span></button> </td>
+                                <td><a class="btn btn-sm btn-success" ng-disabled="isSubmiting"
+                                        uib-tooltip="Add Contacts" ui-sref="phonebook.single({id:grp.id})"
+                                        trigger="mouseenter"><span class="fa fa-plus"></span></a></td>
+                                <td><button class="btn btn-sm btn-danger" ng-disabled="isSubmiting"
+                                        ng-click="deleteItems($index)" uib-tooltip="Delete Group"
+                                        trigger="mouseenter"><span class="fa fa-trash"></span></button></td>
+                            </tr>
+                        </tbody>
+                        <tfoot ng-show="el.selection.length" class="tfoot-dark">
+                            <tr>
+                                <td colspan="8" class="text-right">
+                                    <button class="btn btn-sm btn-default" ng-disabled="isSubmiting"
+                                        uib-tooltip="Send to selection" trigger="mouseenter" ng-click="useGroups()">
+                                        Send Message
+                                    </button>
+                                    <button class="btn btn-sm btn-danger" ng-disabled="isSubmiting"
+                                        uib-tooltip="Delete selection" trigger="mouseenter"
+                                        ng-click="deleteSelection()">
+                                        <span class="fa fa-trash"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

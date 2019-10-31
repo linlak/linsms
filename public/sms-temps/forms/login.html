@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-10 col-sm-6 offset-1 offset-sm-3">
+        <form class="form mt-5 shadow-sm p-3 bg-info rounded" name="login_form" novalidate ng-submit="perform_login()">
+            <h3 class="text-center my-3">Login &nbsp;<span share-me share-title="Login"
+                    share-link="https://lin-sms.com/login.html"
+                    share-message="Login to enjoy the services we offer at LinSMS."></span></h3>
+            <div class="form-group">
+                <div>
+                    <input type="text" name="username" autocomplete="username" class="form-control"
+                        placeholder="Username,email or phone" ng-class="{'is-invalid':errs.username}"
+                        ng-model="auth_user.username">
+                    <span class="invalid-feedback" role="alert" ng-if="errs.username">{{errs.username[0]}}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+                    <input type="password" name="password" autocomplete="current-password" class="form-control"
+                        ng-class="{'is-invalid':errs.password}" placeholder="Password" ng-model="auth_user.password">
+                    <span class="invalid-feedback" role="alert" ng-if="errs.password">{{errs.password[0]}}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+                    <a ui-sref="passrec" class="card-link text-white-50">I forgot my password</a>
+                </div>
+            </div>
+            <div class="form-group clearfix">
+                <div>
+                    <input type="submit" ng-disabled="isSubmiting" name="submit"
+                        class="btn btn-sm btn-success float-right" value="Login">
+                </div>
+            </div>
+            <div class="text-center mt-2">
+                <p>New here? <a ui-sref="register" class="btn btn-sm btn-outline-primary">Register</a></p>
+            </div>
+        </form>
+    </div>
+</div>

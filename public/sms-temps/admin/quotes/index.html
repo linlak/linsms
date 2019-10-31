@@ -1,0 +1,53 @@
+<div class="row">
+    <div class="col-12">
+        <h3 class="text-center">Quotes</h3>
+        <div class="text-center" ng-show="!isUpdating">
+            <button class="btn btn-sm btn-success" ng-click="enDis(true)">
+                Add Quote
+            </button>
+        </div>
+        <div class="row justify-content-center" ng-show="isUpdating">
+            <div class="col-sm-9">
+                <form class="form my-2" ng-submit="saveQuote()">
+                    <div class="form-group">
+                        <div>
+                            <textarea name="quote" id="quote" type="text" placeholder="Enter Quote here..."
+                                class="form-control auto-expand-input" ng-model="quote.body"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span class="btn btn-sm btn-warning" ng-disabled="isSubmitting" ng-click="enDis()">Cancel</span>
+                        <input type="submit" ng-disabled="isSubmitting" class="btn btn-sm btn-primary float-right"
+                            value="Save">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <ul class="list-unstyled mt-2">
+                    <li class="list-unstyled-item my-1" ng-repeat="qt in quotes">
+                        <q>{{qt.body||'testing'}}</q>
+                        <br>
+                        <div class="">
+                            <p>
+                                <span>
+                                    Views: &nbsp;{{qt.views||0}}&nbsp;&nbsp;
+                                    Comments: &nbsp;{{qt.comments||0}}
+                                </span>
+                                <span class="clearfix d-block d-sm-none"></span>
+                                <span class="float-sm-right">
+                                    <button class="btn btn-sm btn-primary" ng-click="editQuote(qt)">Edit</button>
+                                    <button class="btn btn-sm" ng-class="qt.is_published?'btn-warning':'btn-success'"
+                                        ng-click="editQuote(qt)">{{qt.is_published?'Un':''}}Publish</button>
+                                    <button class="btn btn-sm btn-danger" ng-click="deleteQuote(qt)">Delete</button>
+                                </span>
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

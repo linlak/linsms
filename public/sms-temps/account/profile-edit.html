@@ -1,0 +1,25 @@
+<form class="" role="form" ng-submit="saveChanges()">
+    <h3 class="text-center mb-3 card-title ">Edit Profile</h3>
+    <div class="form-group">
+        <input type="text" name="fullname" class="form-control" placeholder="Full name" ng-model="accUser.fullname">
+        <span class="invalid-feedback" role="alert">{{errs.fullname}}</span>
+    </div>
+    <div class="form-group">
+        <label>Gender</label>
+        <div>
+            <label><input type="radio" name="gender" class="" ng-model="accUser.gender" value="male">
+                Male</label>
+            <label><input type="radio" name="gender" class="" ng-model="accUser.gender" value="female">
+                Female</label>
+        </div>
+        <span class="invalid-feedback" role="alert">{{errs.gender}}</span>
+    </div>
+    <div class="form-group">
+        <input type="text" name="country" class="form-control" placeholder="Country" ng-model="accUser.country">
+        <span class="invalid-feedback" role="alert">{{errs.country}}</span>
+    </div>
+    <div class="form-group clearfix mt-3">
+        <input type="submit" name="submit" ng-disabled="isSubnitting" class="float-right btn btn-lg btn-primary"
+            value="Save Changes">
+    </div>
+</form>

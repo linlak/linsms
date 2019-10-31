@@ -1,0 +1,112 @@
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-10" id="sendform">
+        <div class="modal-parent"></div>
+        <h3 class="text-center my-3">Send Message</h3>
+        <p class="text-center">
+            We currently offer bulksms services to only Ugandan networks
+        </p>
+
+        <script type="text/ng-template" id="suspend">
+            <p class="text-danger text-center">
+            <span class="h3">Payment Suspended</span><br> <q>{{me.getReason()||'Unknown'}} </q>
+            </p>
+        </script>
+        <script type="text/ng-template" id="no-sms">
+            <p class="text-danger text-center">
+            <span class="h3">Oops!!..</span> Your Payment is Depleted. To send more SMS.&nbsp;&nbsp;&nbsp;<a href="" class="btn btn-success btn-sm" ng-click="buyMore()">Buy More</a>
+            </p>
+        </script>
+
+        <script type="text/ng-template" id="no-pay">
+            <p class="text-danger text-center">
+            <span class="h3">Sorry!!..</span> You have no runnig Payment.&nbsp;&nbsp;&nbsp;<a ui-sref="buy()" class="btn btn-success btn-sm">Buy Now</a>
+            </p>
+        </script>
+        <script type="text/ng-template" id="send-form">
+            <p class=" text-center">
+                 			<b>You can send <span class="text-danger">{{me.getSMS()}}</span></b> SMS. To send more
+                 			SMS.&nbsp;&nbsp;&nbsp;<a class="btn btn-success btn-sm" href="" ng-click="buyMore()">Buy More</a>
+                 		</p>
+                 		<form  class="form"  autoComplete="off" role="form" novalidate  ng-submit="sendSms()">
+                 			<div class="form-group">
+                 				<label class="control-label">Sender ID:</label>&nbsp;&nbsp;&nbsp;
+                 				<span id="rems"></span>
+                 				<div>
+                 					<input type="text" limit-to="{{cal.id_len}}" limit-to-elem="#rems" ng-class="{'is-invalid':errs.sender_id}"
+                 					    class="form-control" name="sender_id" id="sender_id" ng-model="msg.sender_id" placeholder="Sender ID" />
+                 					<span class="invalid-feedback" ng-if="errs.sender_id" role="alert" id="sender_idErr">{{errs.sender_id[0]}}</span>
+                 				</div>
+                 			</div>
+                 			<div class="form-group">
+                 				<label class="control-label">Type Recipients:</label>&nbsp;&nbsp;&nbsp;&nbsp;{{msg.recipients.length}}</span>
+                 				<span uib-dropdown class="dropdown float-right">
+                 					<span class="btn btn-sm btn-warning" ng-click="testResp()" ng-show="msg.recipients.length">Clean</span>
+                 					<span class="btn btn-sm btn-info dropdown-toggle" uib-dropdown-toggle>Options <span class="caret"></span></span>
+                 					<div class="dropdown-menu bg-success" role="menu" uib-dropdown-menu >
+
+                 							<span class="dropdown-item"  ng-click="openUploader('.modal-parent')"><span class="fa fa-file-upload"></span>&nbsp; Upload Recipients</span>
+
+                 							<span class="dropdown-item"  ng-click="onPhone('.modal-parent')"><span class="fa fa-user-plus"></span>&nbsp; Open Phone Book</span>
+
+                 					</div>
+                 				</span>
+                 				<div>
+
+                 					<textarea type="text" ng-model="msg.recipients" class="form-control auto-expand-input" ng-list=", " ng-class="{'is-invalid':errs.recipients}"
+                 					    name="recipients" id="recipients" on-paste="testResp()" placeholder="256783198167,256751921465,"></textarea>
+                 					<p class="help-block">Enter Comma separated Numbers ( e.g: 2567xx xxx xxx,2567xx xxx xxx,)</p>
+                 					<span class="invalid-feedback" ng-if="errs.recipients" role="alert" id="recipientsErr">{{errs.recipients[0]}}</span>
+                 				</div>
+                 			</div>
+                 			<div class="form-group">
+                 				<label class="control-label">Message:</label>&nbsp;&nbsp;&nbsp;<span id="msgcnt"></span>
+                 				<div>
+                 					<textarea type="text"
+                 					ng-model="msg.message"
+                 					msg-counter
+                 					msg-max-count="{{cal.msg_cnt}}" ng-class="{'is-invalid':errs.message}"
+                 					msg-count-elem="#msgcnt"
+                 					msg-count-length="{{cal.wrd_cnt}}"
+                 					msg-rem-elem="#msgremof"
+                 					rows="4"
+                 					class="form-control auto-expand-input" name="message" id="message" placeholder="Message Here............"></textarea>
+                 					<p class="text-right"><span id="msgremof"></span>&nbsp;&nbsp;&nbsp;
+									 </p>
+                 					<span class="invalid-feedback" ng-if="errs.message" role="alert" id="messageErr" > {{ errs.message[0] }}</span>
+                 				</div>
+                 			</div>
+                 			<div class="form-group form-check" >
+
+                 				<input type="checkbox" id="defer-send" ng-model="msg.shouldQueue" class="form-check-input">
+                 				<label for="defer-send" class="form-check-label">Set message delivery time.</label>
+
+                 			</div>
+                 			<div class="form-row" ng-show="msg.shouldQueue">
+								<div class="form-group col-sm-6">
+									<label for="hours" class="control-label">Add Hours</label>
+									<div>
+										<input type="number" ng-model="msg.hours" placeholder="Hours" min="0" max="24" name="hours" id="hours"
+										ng-class="{'is-invalid':errs.hours}"
+										class="form-control" />
+										<span class="invalid-feedback" ng-if="errs.hours" role="alert">{{errs.hours[0]}}</span>
+									</div>
+								</div>
+								<div class="form-group col-sm-6">
+									<label for="minutes" class="control-label">Add Minutes</label>
+									<div>
+										<input type="number" ng-model="msg.minutes" name="minutes" id="minutes" placeholder="Minutes"
+										 min="0" max="24" ng-class="{'is-invalid':errs.minutes}" class="form-control"/>
+										<span class="invalid-feedback" ng-if="errs.minutes" role="alert" >{{errs.minutes[0]}}</span>
+									</div>
+								</div>
+							 </div>
+                 			<div class="form-group clearfix">
+                 				<div>
+                 					<input type="submit" ng-disabled="isSubmiting" class="btn btn-sm btn-success float-right" name="submit"  value="Send"  />
+                 				</div>
+                 			</div>
+                 </form>
+        </script>
+        <div ng-include="showTemp(me)"></div>
+    </div>
+</div>

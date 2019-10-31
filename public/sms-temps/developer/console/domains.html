@@ -1,0 +1,156 @@
+<div class="row justify-content-center">
+    <div class="col-11 col-sm-12">
+        <h3 class="text-center">My Domains</h3>
+        
+        <div class="row justify-content-center">
+            <div class="col-sm-8 my-2">
+                <div class="text-center" ng-show="!form_visible">
+                    <button
+                        class="btn btn-success"
+                        ng-disabled="isSubmiting"
+                        ng-click="showForm(true)"
+                    >
+                        Add Domain
+                    </button>
+                </div>
+                <div ng-show="form_visible">
+                    <form class="form-horizontal" ng-submit="createEdit()">
+                        <div class="fom-group form-row mb-2">
+                            <label
+                                for="host_scheme"
+                                class="control-label col-sm-3"
+                                >Scheme</label
+                            >
+                            <div class="col-sm-9">
+                                <select
+                                    name="host_scheme"
+                                    class="form-control"
+                                    ng-model="mydomain.host_scheme"
+                                    id="host_scheme"
+                                >
+                                    <option value="">Select Scheme</option>
+                                    <option value="https"
+                                        >HTTPS (Recommended)</option
+                                    >
+                                    <option value="http">HTTP</option>
+                                </select>
+                                <span
+                                    class="text-danger"
+                                    ng-if="errs.host_scheme"
+                                    >{{ errs.host_scheme[0] }}</span
+                                >
+                            </div>
+                        </div>
+                        <div class="fom-group form-row mb-2">
+                            <label
+                                for="host_name"
+                                class="control-label col-sm-3"
+                                >Host Name</label
+                            >
+                            <div class="col-sm-9">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    name="host_name"
+                                    ng-model="mydomain.host_name"
+                                    id="host_name"
+                                    placeholder="example.com"
+                                />
+                                <span
+                                    class="text-danger"
+                                    ng-if="errs.host_name"
+                                    >{{ errs.host_name[0] }}</span
+                                >
+                            </div>
+                        </div>
+                        <div class="fom-group">
+                            <div class="">
+                                <span
+                                    class="btn btn-sm btn-warning"
+                                    ng-disabledd="isSubmiting"
+                                    ng-click="showForm()"
+                                    >Close</span
+                                >
+                                <button
+                                    ng-disabledd="isSubmiting"
+                                    type="submit"
+                                    class="btn btn-sm float-right"
+                                    ng-class="mydomain.id?'btn-primary':'btn-success'"
+                                >
+                                    {{ mydomain.id ? "Edit" : "Create" }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table text-sm-center">
+                <thead class="bg-dark text-white ">
+                    <th width="10%">Scheme</th>
+                    <th width="25%">Host</th>
+                    <th width="25%">App</th>
+                    <th width="10%">Status</th>
+                    <th colspan="3" class="text-center">Actions</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="domain in mydomains">
+                        <td>{{ domain.host_scheme }}</td>
+                        <td>{{ domain.host_name }}</td>
+                        <td>
+                            {{ domain.web_app.app_name || "N/A" }}
+                        </td>
+                        <td>
+                            <span
+                                class="strong"
+                                ng-class="domain.is_verified?'text-success':'text-danger'"
+                            >
+                                {{
+                                    domain.is_verified ? "Verified" : "Pending"
+                                }}
+                            </span>
+                        </td>
+                        <td class="text-center">
+                            <button
+                                ng-disabled="isSubmiting||domain.is_verified"
+                                ng-click="downloadKey(domain)"
+                                class="btn btn-sm btn-dark"
+                                uib-tooltip="Download Verification file"
+                            >
+                                <span class="fa fa-download"></span>
+                            </button>
+                        </td>
+                        <td class="text-center">
+                            <button
+                                ng-click="verifyDomain(domain)"
+                                ng-disabled="isSubmiting||domain.is_verified"
+                                class="btn btn-sm btn-success"
+                                uib-tooltip="Verify Domain"
+                            >
+                                <span class="fa fa-check"></span>
+                            </button>
+                        </td>
+                        <td class="text-center">
+                            <button
+                                ng-click="deleteDomain(domain)"
+                                ng-disabled="isSubmiting"
+                                class="btn btn-sm btn-danger"
+                                uib-tooltip="Delete Domain"
+                            >
+                                <span class="fa fa-trash"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    <td
+                        colspan="7"
+                        ng-if="!mydomains.length"
+                        class="text-center py-5"
+                    >
+                        <strong>No records</strong>
+                    </td>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

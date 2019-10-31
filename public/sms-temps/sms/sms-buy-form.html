@@ -1,0 +1,37 @@
+<p class="text-center">This payment must be made within <b>24</b> Hours from <b>TIME</b> of Initiation.</p>
+<center>
+    <p><span class="h3">Here Already?</span> &nbsp; <a class="btn btn-success btn-sm" ui-sref="pay">Click Here</a> </p>
+</center>
+<form class="form p-3 " autoComplete="off" role="form" method="POST" id="buyform" ng-submit="buynow()">
+    <div class="form-group">
+        <label class="control-label">Enter Number of SMS</label>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span id="smsPrice">UShs: {{pricepreview|customCurrency:'/=':false}}</span>
+        <div class="">
+            <div class="input-group">
+                <input type="text" class="form-control" name="sms_count" ng-model="pay.sms_count" id="sms_count"
+                    ng-class="{'is-invalid':errs.sms_count}" ng-change="calPreview()" ng-blur="calPreview(1)"
+                    placeholder="Enter SMS here...." />
+                <span class="input-group-addon">SMS</span>
+            </div>
+            <p class="help-block">The initial Amount is {{smsValues.minp*smsValues.minv |customCurrency:'/=':false}}</p>
+            <span class="text-danger" id="sms_countErr" ng-if="errs.sms_count">{{errs.sms_count[0]}}</span>
+        </div>
+    </div>
+    <div class="form-group form-check">
+        <input type="checkbox" class="form-check-control" name="pay_now" ng-model="pay.pay_now" id="pay_now" />
+        <label for="pay_now" class="form-check-label">Pay Now</label>
+    </div>
+    <div class="form-group" ng-show="pay.pay_now">
+        <div class="">
+            <input type="tel" class="form-control" name="p_phone" ng-model="pay.p_phone" id="p_phone"
+                ng-class="{'is-invalid':errs.p_phone}" placeholder="Enter number to be charged" />
+            <span class="text-danger" ng-if="errs.p_phone">{{errs.p_phone[0]}}</span>
+        </div>
+    </div>
+    <div class="form-group clearfix">
+        <div class="">
+            <input type="submit" ng-disabled="isSubmiting" name="buy" id="buy"
+                class="btn btn-success btn-sm float-right" value="Initiate" />
+        </div>
+    </div>
+</form>

@@ -1,0 +1,210 @@
+html {
+    width: 100%;
+    overflow-x: hidden;
+    min-height: 100vh;
+    height: 100%;
+}
+
+/*scrollbar css*/
+
+::-webkit-scrollbar {
+    min-width: 12px;
+    width: 12px;
+    max-width: 12px;
+    min-height: 12px;
+    height: 12px;
+    max-height: 12px;
+    background: #e5e5e5;
+    box-shadow: inset 0px 50px 0px rgba(82, 179, 217, 0.9), inset 0px -52px 0px #fafafa;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #bbb;
+    border: none;
+    border-radius: 100px;
+    border: solid 3px #e5e5e5;
+    box-shadow: inset 0px 0px 3px #999;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #b0b0b0;
+    box-shadow: inset 0px 0px 3px #888;
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: #aaa;
+    box-shadow: inset 0px 0px 3px #7f7f7f;
+}
+
+::-webkit-scrollbar-button {
+    display: block;
+    height: 26px;
+}
+
+#mypage {
+    min-height: 655px;
+    height: 100%;
+    padding-bottom: 100px;
+    position: relative;
+}
+
+.table {
+    color: #e5e5e5;
+}
+
+a {
+    color: #32c7c7;
+    font-weight: bold;
+}
+
+.admn {
+    z-index: 100;
+}
+
+.admn .fa {
+    visibility: hidden;
+}
+
+.admn:hover .fa {
+    visibility: visible;
+}
+
+.navmain {
+    z-index: 100;
+}
+
+.dev-nav,
+.side-nav {
+    position: absolute;
+    min-height: 300px;
+    height: 100%;
+    /* top: 100; */
+    width: 200px;
+    left: -201px;
+
+}
+
+.side-nav {
+    z-index: 99;
+}
+
+.dev-nav {
+    z-index: 90;
+}
+
+#navtogglerlabel,
+#dev-toggle-btn {
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    padding: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    margin: 0;
+
+}
+
+#dev-toggle-btn {
+    top: 40%;
+    font-size: .8em;
+    padding: 2px;
+}
+
+#navtogglerlabel {
+    top: 50%;
+
+}
+
+#navtogglerlabel .fa,
+#adminnavtogglerlabel .fa {
+    margin: 0;
+    padding: 0;
+}
+
+#navtoggler {
+    display: none;
+}
+
+#dev-toggler:checked~.dev-nav,
+#navtoggler:checked~.side-nav {
+    left: 0px;
+}
+
+#dev-toggler:checked~#dev-toggle-btn,
+#navtoggler:checked~#navtogglerlabel {
+    left: 190px;
+}
+
+
+#dev-toggler {
+    display: none;
+}
+
+.auto-expand-input {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    border: none;
+    line-height: 2em;
+    -webkit-transition: height 5s ease-in-out;
+    -moz-transition: height 5s ease-in-out;
+    -ms-transition: height 5s ease-in-out;
+    -o-transition: height 5s ease-in-out;
+    transition: height 5s ease-in-out;
+    padding: 10px;
+}
+
+.side-nav,
+.adminnav,
+.dev-nav,
+#dev-toggle-btn,
+#adminnavtogglerlabel,
+#navtogglerlabel {
+    -moz-transition: all .3s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+}
+
+* {
+    -webkit-font-smoothing: antialised !important;
+}
+
+@media screen and (max-height:445px) {
+    #mypage {
+        min-height: 400px;
+        padding-bottom: 80px;
+    }
+
+}
+
+@media screen and (max-width:650px) {
+    .adminnav {
+        position: absolute;
+        z-index: 90;
+        padding: 15px;
+        left: -220px;
+        background: #555;
+        width: 200px;
+        margin: 0;
+    }
+
+    #adminnavtogglerlabel {
+        position: fixed;
+        cursor: pointer;
+        top: 30%;
+        left: 0;
+        padding: 5px;
+        z-index: 95;
+        font-size: 1.2em;
+    }
+
+    #adminnavtoggler:checked~.adminnav {
+        left: 0px;
+    }
+
+    #adminnavtoggler:checked~#adminnavtogglerlabel {
+        left: 190px;
+    }
+}

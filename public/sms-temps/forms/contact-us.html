@@ -1,0 +1,66 @@
+<form role="form" class="form" autocomplete="off" id="contactus" method="post">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="control-label" for="fnm">First Name:*</label>
+                <div class="">
+                    <input type="text" class="form-control" id="fnm" name="fnm" ng-model="contact.first_name"
+                        placeholder="Enter First Name" title="" />
+                    <span class="invalid-feedback" role="alert" id="fnmErr">{{errs.first_name}}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="lnm">Sir Name:*</label>
+                <div class="">
+                    <input type="text" class="form-control" id="lnm" name="lnm" ng-model="contact.last_name"
+                        placeholder="Enter Sir Name" title="" />
+                    <span class="invalid-feedback" role="alert" id="lnmErr">{{errs.last_name}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="control-label" for="email">Email:*</label>
+                <div class="">
+                    <input type="email" class="form-control" id="email" name="vmail" ng-model="contact.email"
+                        placeholder="e.g (john@example.com)" title="" />
+                    <span class="invalid-feedback" role="alert" id="emailErr"> {{errs.email}}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="subj">Subject:*</label>
+                <div class="">
+                    <input type="text" class="form-control" id="subj" name="subj" ng-model="contact.subject"
+                        placeholder="Subject" title="" />
+                    <span class="invalid-feedback" role="alert" id="subjErr">{{errs.subject}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <textarea ng-model="contact.msg" class="form-control"></textarea>
+    <div class="form-group">
+        <label class="control-label" for="msgbody">Message:*</label>
+        <div class="">
+            <!-- textarea-menu="textareaMenu"<textarea type="text" class="form-control" id="msgbody"   placeholder="Type your message here!!" ng-model="contact.msg" title=""></textarea> -->
+            <wysiwyg ng-model="contact.msg" textarea-name="msgbody" textarea-placeholder="Type your message here!!"
+                textarea-class="form-control htmltextarea" enable-bootstrap-title="false"></wysiwyg>
+            <span class="invalid-feedback" role="alert" id="msgbodyErr">{{errs.msg}}</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="nwsltr">
+            <input type="checkbox" id="nwsltr" name="nwsltr" ng-model="nwsltr" title="" /> Sign Me up for monthly News
+            Letter</label>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-10 col-sm-offset-1">
+            <input type="reset" class="btn btn-info" name="reset" value="Reset" title="" />
+            <input type="submit" class="btn btn-success float-right" id="contact_send" name="contactus"
+                value="Send Message" title="" />
+        </div>
+    </div>
+</form>
+<br>
+<br>

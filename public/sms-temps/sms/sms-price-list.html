@@ -1,0 +1,19 @@
+			<h3 class="text-sm-center my-2">SMS Price List &nbsp;<span share-me share-title="'Pricing'"
+			        share-link="https://lin-sms.com/pricing.html"
+			        share-message="We offer best services at friendly prices."></span></h3>
+			<table class="table table-striped table-bordered">
+			    <thead>
+			        <!-- <tr> -->
+			        <th>SMS Units</th>
+			        <th>Price @</th>
+			        <th>Initial Shs.</th>
+			        <!-- </tr> -->
+			    </thead>
+			    <tbody>
+			        <tr ng-repeat="price in smsPriceList">
+			            <td>{{price.minunts}}</td>
+			            <td>{{price.unitp}}</td>
+			            <td>{{(price.unitp*price.minno) |customCurrency:'/=':false}}</td>
+			        </tr>
+			    </tbody>
+			</table>

@@ -1,0 +1,24 @@
+<h3 class="text-center d-none d-sm-block">Manage Fields</h3>
+<input type="checkbox" class="d-none" ng-model="showAdminSide" id="adminnavtoggler">
+<span id="adminnavtogglerlabel" class="bg-warning d-sm-none" ng-click="toggleadminSide()">
+    <span class="fa" ng-class="showAdminSide?'fa-angle-left':'fa-angle-right'"></span>
+</span>
+<div class="navbar-nav navbar-dark adminnav">
+    <ul class="navbar-nav">
+        <li class="nav-item" ui-sref-active="active"><a class="nav-link" ui-sref="admin.home">Administration</a></li>
+        <li class="nav-item" ui-sref-active="active" ng-show="isSuper"><a class="nav-link" ui-sref="a_users.all">User
+                Accounts</a></li>
+        <!-- <li><a ui-sref="a_fields">Users Fields</a></li> -->
+        <!-- <li><a ui-sref="a_cat.all()">Categories</a></li> -->
+        <li class="nav-item" ui-sref-active="active"><a class="nav-link" ui-sref="a_sms.all" ng-show="isSuper">SMS
+                Payments</a></li>
+        <li class="nav-item" ui-sref-active="active"><a class="nav-link" ui-sref="a_share.all" ng-show="isSuper">SMS
+                Me2U</a></li>
+        <li class="nav-item" ui-sref-active="active"><a class="nav-link" ui-sref="a_sent.all">Sms Sent</a>
+        </li>
+        <!-- <li><a ui-sref="a_pay.home()">Payments</a></li> -->
+        <!-- <li><a ui-sref="a_pocket.home()">User Pockets</a></li> -->
+        <li class="nav-item" ui-sref-active="active"><a class="nav-link" ui-sref="a_views.all">User Views</a></li>
+        <li class="nav-item" ui-sref-active="active"><a class="nav-link" ui-sref="a_quotes.all">Quotes</a></li>
+    </ul>
+</div>

@@ -1,0 +1,12 @@
+<div class="row">
+    <div class="col-12">
+        <p>
+            {{client_id|stringObscure:0:3:show_client}} <span ng-click="showClient()" class="btn btn-sm"
+                ng-class="show_client?'btn-danger':'btn-success'">Show/Hide</span>
+        </p>
+        <p>
+            {{secret|stringObscure:0:3:show_secret}} <span ng-click="showSecret()" class="btn btn-sm"
+                ng-class="show_secret?'btn-danger':'btn-success'">Show/Hide</span>
+        </p>
+    </div>
+</div>

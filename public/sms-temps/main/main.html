@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-12 navmain">
+                <div ui-view="nav"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div online-clients></div>
+                <input type="checkbox" id="navtoggler" ng-model="showSide">
+                <span id="navtogglerlabel" class="bg-warning" ng-click="toggleSide()">
+                    <span class="fa" ng-class="showSide?'fa-angle-left':'fa-angle-right'"></span>
+                </span>
+                <div class="side-nav bg-secondary bg-secondary border-top border-light" ui-view="sidenav">
+
+                </div>
+                <div ui-view="body" id="mypage"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div ui-view="footer"></div>
+            </div>
+        </div>
+        <div is-loading></div>
+        <span ui-view="alertcont"></span>
+        <is-loading></is-loading>
+        <toaster-container toaster-options="{'time-out': 3000,'position-class':'toast-bottom-left'}">
+        </toaster-container>
+        <scroll-up></scroll-up>
+        <share></share>
+        <text-slider></text-slider>
+        <div m-overlay></div>
+    </div>
+</div>

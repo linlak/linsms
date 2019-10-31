@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="col-12">
+        <h3 class="text-center">{{ sub_title }}</h3>
+        <script type="text/ng-template" id="list-item">
+            <b>User Name: </b>&nbsp;<a href="">{{sms.username}}</a>&nbsp;&nbsp;
+                        <b>Sender ID: </b>&nbsp;<a href="">{{sms.sender_id}}</a>&nbsp;&nbsp;
+                        <b>Receipients: </b>&nbsp;{{sms.recpct}}&nbsp;&nbsp;
+                        <b>SMS Length: </b>&nbsp;{{sms.msg_len}}&nbsp;&nbsp;
+                        <b>Sent: </b>&nbsp;{{sms.sentDate}}<br>
+                        <b>SMS Count: </b>&nbsp;{{sms.msg_cnt}}&nbsp;&nbsp;
+                        <b>Units Used: </b>&nbsp;{{sms.unitsSpent}}&nbsp;&nbsp;
+                        <b>From: </b>&nbsp;<a href="">{{sms.p_ref}}</a>&nbsp;&nbsp;
+                        <b>Units Before: </b>&nbsp;{{sms.unitsbefore}}&nbsp;&nbsp;
+                        <b>Units After: </b>&nbsp;{{sms.unitsAfter}}&nbsp;&nbsp;
+        </script>
+        <script type="text/ng-template" id="detail-item">
+            <p>
+                <b>User Name: </b>&nbsp;
+                <a href="">{{cur_sms.username}}</a>
+                &nbsp;&nbsp; 
+                <b>Sender ID: </b>&nbsp;
+                <a href="">{{cur_sms.sender_id}}</a>
+                &nbsp;&nbsp;<br>
+                <b>Message: </b><br>
+                {{cur_sms.message}}
+                &nbsp;&nbsp;<br>
+                <b>Receipients: </b>
+                &nbsp;{{cur_sms.recpct}}
+                &nbsp;
+                &nbsp;
+                <b>SMS Length: </b>
+                &nbsp;{{cur_sms.msg_len}}&nbsp;&nbsp;
+                <b>Sent: </b>&nbsp;
+                {{cur_sms.sentDate}}<br>
+                <b>SMS Count: </b>&nbsp;{{cur_sms.msg_cnt}}&nbsp;&nbsp;
+                <b>Units Used: </b>
+                &nbsp;{{cur_sms.unitsSpent}}&nbsp;&nbsp;
+                <b>From: </b>
+                &nbsp;
+                <a href="">{{cur_sms.p_ref}}</a>&nbsp;&nbsp;
+                <b>Units Before: </b>
+                &nbsp;{{cur_sms.unitsbefore}}
+                &nbsp;&nbsp;
+                <b>Units After: </b>&nbsp;{{cur_sms.unitsAfter}}&nbsp;&nbsp;
+            </p>
+        </script>
+        <div ng-show="smslist.length">
+            <ul class="list-group">
+                <li ng-repeat="sms in smslist" class="list-group-item bg-info" ng-include="showTemp(sms)">
+                </li>
+            </ul>
+        </div>
+        <div class="row justify-content-center" ng-show="!smslist.length">
+            <div class="col-sm-6 py-3 text-center">
+                <strong>No records!</strong>
+            </div>
+        </div>
+    </div>
+</div>

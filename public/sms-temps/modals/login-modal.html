@@ -1,0 +1,26 @@
+<div class="modal-header bg-info">
+    <h3 class="modal-title text-center" id="modal-title">Login</h3>
+</div>
+<div class="modal-body bg-info" id="modal-body">
+    <form class="form">
+        <div class="form-group">
+            <div>
+                <input type="text" class="form-control" ng-model="$ctrl.auth_user.username"
+                    ng-class="{'is-invalid':$ctrl.err.username}" placeholder="Username,email or phone" />
+                <span class="text-danger" ng-if="$ctrl.err.username">{{$ctrl.err.username[0]}}</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div>
+                <input type="password" class="form-control" ng-model="$ctrl.auth_user.password"
+                    ng-class="{'is-invalid':$ctrl.err.password}" placeholder="Password" />
+                <span class="text-danger" ng-class="$ctrl.err.password">{{$ctrl.err.password[0]}}</span>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer bg-info">
+    <button class="btn btn-success" ng-disabled="$ctrl.isSubmiting" type="button" ng-click="$ctrl.ok()">Login</button>
+    <button class="btn btn-warning" ng-disabled="$ctrl.isSubmiting" type="button"
+        ng-click="$ctrl.cancel()">Cancel</button>
+</div>

@@ -1,0 +1,33 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card bg-info">
+            <div class="card-header">
+                <h3 class="text-center">
+                    My App
+                </h3>
+                <ul class="nav nav-pills card-header-pills text-white">
+                    <li class="nav-item" ui-sref-active="active">
+                        <a ui-sref="appdetail.home({id:app_id})" class="nav-link text-white">Home</a>
+                    </li>
+                    <li class="nav-item" ui-sref-active="active">
+                        <a ui-sref="appdetail.edit({id:app_id})" class="nav-link text-white">Edit</a>
+                    </li>
+                    <li class="nav-item" ui-sref-active="active">
+                        <a ui-sref="appdetail.messages({id:app_id})" class="nav-link text-white">Messages</a>
+                    </li>
+                    <li class="nav-item" ui-sref-active="active">
+                        <a ui-sref="appdetail.hooks({id:app_id})" class="nav-link text-white">WebHooks</a>
+                    </li>
+                    <li class="nav-item" ui-sref-active="active">
+                        <a ui-sref="appdetail.settings({id:app_id})" class="nav-link text-white">Settings</a>
+                    </li>
+                    <li class="nav-item" ui-sref-active="active">
+                        <a ui-sref="appdetail.stats({id:app_id})" class="nav-link text-white">Statistics</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-bordy" ui-view="body"></div>
+        </div>
+
+    </div>
+</div>

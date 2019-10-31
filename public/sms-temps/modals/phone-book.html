@@ -1,0 +1,41 @@
+<div class="modal-header bg-info">
+    <h3 class="modal-title" id="modal-title">Select Phone Book</h3>
+</div>
+<div class="modal-body bg-info" id="modal-body">
+    <p>Note:<br>Repeated numbers will be filtered.</p>
+    <form class="form phn-choose" ng-show="!$ctrl.error">
+        <div class="table-responsive">
+            <table class="table ">
+                <tr>
+                    <!-- checklistChange -->
+                    <th><label><input type="checkbox" name="check_all" ng-model="$ctrl.check_all"
+                                ng-change="$ctrl.check_selected()" ng-true-value="1" ng-false-value="0"
+                                ng-disabled="!$ctrl.groups.length"> All</label></th>
+                    <th>Title</th>
+                    <th>No</th>
+                    <th>Created</th>
+                    <th>Updated</th>
+                </tr>
+                <tr ng-repeat="group in $ctrl.groups track by $index">
+                    <td> <input type="checkbox" name="{{group.title+$index}}" checklist-model="$ctrl.selection"
+                            checklist-change="$ctrl.check_change()" checklist-value="group.id"></td>
+                    <td>{{group.title}}</td>
+                    <td>{{group.contacts}}</td>
+                    <td>{{group.created}}</td>
+                    <td>{{group.last_updated}}</td>
+                </tr>
+            </table>
+        </div>
+    </form>
+    <center ng-show="$ctrl.error">
+        <p class="text-danger">Error!!</p>
+        <span class="btn btn-sm btn-default" ng-click="$ctrl.retry()">
+            <span class="glyphicon glyphicon-refresh"></span>
+        </span>
+    </center>
+</div>
+<div class="modal-footer bg-info">
+    <button class="btn btn-success" type="button" ng-click="$ctrl.ok()"
+        ng-show="$ctrl.groups.length&&$ctrl.selection.length">Use Selected</button>
+    <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Close</button>
+</div>

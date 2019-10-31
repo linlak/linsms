@@ -1,0 +1,17 @@
+{
+    "name": "LinSms Uganda",
+    "short_name": "LinSms",
+    "start_url": "./",
+    "lang": "en",
+    "author": "Linus Nowomukama",
+    "theme_color": "#343a40",
+    "background_color": "#007bff",
+    "display": "fullscreen",
+    "icons": [{
+        "src": "\/images\/linfav.png",
+        "sizes": "50X25",
+        "type": "image\/png"
+    }],
+    "description": "linsms is an online bulk sms marketing system dedicted to enable indivals, businesses and companies to send sms to their frequent customers and for mass gatherings from their internet enabled devices like pcs and mobile.",
+    "permissions": []
+}

@@ -1,0 +1,21 @@
+<div class="modal-header bg-info">
+    <h3 class="modal-title" id="modal-title">Confirm SMS</h3>
+</div>
+<div class="modal-body bg-info" id="modal-body">
+    <p>Note:<br>Please Read through your sms before sending to avoid errors.</p>
+
+    <p><b>Sender Id:</b> &nbsp;{{$ctrl.msg.sender_id}}</p>  
+    <p><b>Message:</b> &nbsp;{{$ctrl.msg.message}}</p> 
+    <h3>Statistics:</h3>
+    <p><b>SMS Balance:</b> &nbsp;<span class="stat">{{$ctrl.me.getSMS()}}</span></p> 
+    <p><b>Recipients</b> &nbsp;{{$ctrl.msg.recipients.length}}</p>
+    <p><b>Message Length</b> &nbsp;<span class="stat">{{$ctrl.msg.message.length||0}}</span></p> 
+    <p><b>Message Count</b> &nbsp;<span class="stat">{{($ctrl.msg.message.length>$ctrl.cal.wrd_cnt)?$ctrl.cal.msg_cnt:1}}</span></p> 
+    <p><b>SMS to be Used:</b> &nbsp;<span class="stat">
+    {{((($ctrl.msg.message.length>$ctrl.cal.wrd_cnt)?$ctrl.cal.msg_cnt:1)*($ctrl.msg.recipients.length||0))}}
+    </span></p> 
+</div>
+<div class="modal-footer bg-info">
+    <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
+    <button class="btn btn-success" type="button" ng-click="$ctrl.ok()">Send</button>
+</div>

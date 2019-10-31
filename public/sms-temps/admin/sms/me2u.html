@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-12">
+        <h3 class="text-center">Me2U</h3>
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <td>Username</td>
+                    <td>SMS</td>
+                    <td>Voucher Code</td>
+                    <td>From</td>
+                    <td>From Ref</td>
+                    <td>To Ref</td>
+                    <td>Status</td>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="m in mu">
+                        <td>{{m.recipient}}</td>
+                        <td>{{m.sms_count}}</td>
+                        <td>{{m.v_code}}</td>
+                        <td>{{m.sender}}</td>
+                        <td>{{m.frm_ref}}</td>
+                        <td>{{m.to_ref}}</td>
+                        <td>
+                            <span class="" ng-if="m.status">Redeemed</span>
+                            <span class="text-danger" ng-if="!m.status">Pending</span>
+                        </td>
+                    </tr>
+                    <tr ng-show="!mu.length">
+                        <td colspan="7" class="text-center">
+                            No data
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

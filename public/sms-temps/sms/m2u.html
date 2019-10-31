@@ -1,0 +1,130 @@
+<div class="row">
+    <div class="col-12 col-sm-10 offset-sm-1">
+        <h3 class="text-center my-3">You can share your SMS Credit with your friend on LinSMS</h3>
+        <div uib-tabset active="curTab" id="m2u">
+            <div class="panel-default" uib-tab select="reset()" index="0">
+                <h4 uib-tab-heading>Share SMS</h4>
+                <p class="help-block">Remember to send the <strong>Voucher Code</strong> to the recipient before they
+                    can use it.</p>
+                <form class="form-horizontal mx-auto" autocomplete="off" ng-submit="sendSms()">
+                    <div class="form-group">
+                        <label class="control-label col-sm-5">Friend's ID:</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" ng-model="user.name" name="name"
+                                placeholder="Enter Username, Email or Phone" ng-class="{'is-invalid':errs.name}">
+                            <span class="invalid-feedback" role="alert" ng-if="errs.name">{{errs.name[0]}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-5">Number of SMS:</label>
+                        <div class="col-sm-7">
+                            <input type="text" ng-model="user.sms" class="form-control" name="amount"
+                                placeholder="Enter SMS to Share" ng-class="{'is-invalid':errs.sms}">
+                            <span class="invalid-feedback" role="alert" ng-if="errs.sms">{{errs.sms[0]}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <div class="col-sm-11">
+                            <input type="submit" ng-disabled="isSubmiting" name="submit" value="Share"
+                                class="btn btn-sm btn-success">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="panel-default" uib-tab select="reset()" index="1">
+                <h4 uib-tab-heading>Load SMS Voucher</h4>
+                <p class="help-block">Please ask your friend to send you the <strong>Voucher Code</strong> to fill in
+                    the form below.</p>
+                <form name="loadsms" class="form-horizontal" novalidate autocomplete="off" ng-submit="loadSms()">
+                    <div class="form-group">
+                        <label class="control-label col-sm-5">Code:</label>
+                        <div class="col-sm-7">
+                            <input type="text" ng-model="smsCode.voucher_code" class="form-control" ng-trim="false"
+                                placeholder="Enter Code" ng-class="{'is-invalid':errs.code}">
+                            <p class="help-block">Code is case sensitive.</p>
+                            <span class="invalid-feedback" role="alert" ng-if="errs.code">{{errs.code[0]}}</span>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group">
+                        <div class="col-sm-11">
+                            <input type="submit" ng-disabled="isSubmiting" name="submit" value="Load SMS"
+                                class="btn btn-sm btn-success pull-right">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="panel-default" uib-tab select="loadShare(1)" deselect="clrShare()" index="2">
+                <h4 uib-tab-heading>Shared SMS</h4>
+                <p class="help-block">Please you must send the <strong>Voucher Code</strong> to the recipient before
+                    they can use it.</p>
+                <div id="ListDiv" ng-show="shared.length">
+                    <ul>
+                        <li class="clearfix" ng-repeat="share in shared">
+                            <p>
+                                <b>Recipient: </b>{{share.receiver}}&nbsp;
+                                <b>SMS: </b>{{share.voucher_count}}&nbsp;
+                                <b>Code: </b>{{share.voucher_code}}&nbsp;
+                                <b>Sent: </b>{{share.init_date}}&nbsp;
+                                <b>Used: </b>
+                                <span ng-show="share.is_used==='1'">Yes</span>
+                                <span ng-show="share.is_used==='0'">No</span>
+                                &nbsp;
+                                <b>Date: </b>{{share.date_used||'N/A'}}&nbsp;
+                                <b>From: </b>
+                                <span ng-show="share.is_used==='1'">
+                                    {{share.from_ref}}
+                                </span>
+                                <span ng-show="share.is_used==='0'">N/A</span>
+                                &nbsp;&nbsp;&nbsp;
+                                <button class="btn btn-sm btn-danger" ng-disabled="share.is_used==='1'"
+                                    ng-click="removeCode($index,share.id,share.voucher_code)"><span
+                                        class="fa fa-trash"></span></button>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row" ng-show="!shared.length">
+                    <div class="col-12 text-center mt-sm-4">
+                        <div class="well well-sm">
+                            <strong>No records found!!</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-default" uib-tab select="loadShare()" deselect="clrShare(true)" index="3">
+                <h4 uib-tab-heading>Received SMS</h4>
+                <div id="ListDiv" ng-show="received.length">
+                    <ul>
+                        <li class="clearfix" ng-repeat="rec in received">
+                            <p>
+                                <b>From: </b>{{rec.sender}}
+                                &nbsp;&nbsp;
+                                <b>SMS: </b>{{rec.voucher_count}}
+                                &nbsp;&nbsp;
+                                <b>Code: </b>{{rec.voucher_code}}
+                                &nbsp;&nbsp;
+                                <b>Sent: </b>{{rec.init_date}}
+                                &nbsp;&nbsp;
+                                <b>Received: </b>{{rec.date_used}}
+                                &nbsp;&nbsp;
+                                <b>Added To: </b>&nbsp;&nbsp;&nbsp;
+                                {{rec.to_ref}}
+
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row" ng-show="!received.length">
+                    <div class="col-12 text-center mt-sm-4">
+                        <div class="well well-sm">
+                            <strong>No records found!!</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+<div class="row" id="smserhead">
+	<div class="col-12">
+		<h3 class="text-center">{{sub_header||'Adminstration Page'}}</h3>
+		<ul class="nav navbar-nav" ng-show="nav.length">
+			<li ng-repeat="l in nav">
+				<a href="{{l.toState}}({{l.param||'{}'}})">{{l.title}}</a>
+			</li>
+		</ul>
+	</div>
+</div>

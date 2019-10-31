@@ -1,0 +1,18 @@
+<div class="model-header bg-info">
+    <h3 class="modal-title text-sm-center" id="modal-title">Authentication Required</h3>
+</div>
+<div class="modal-body bg-info" id="modal-body">
+    <form class="form">
+        <div class="form-group">
+            <div>
+                <input type="password" ng-model="$ctrl.token" ng-class="{'is-invalid':$ctrl.errs.token}"
+                    class="form-control" placeholder="Enter token" />
+                <span class="invalid-feedback" role="alert" ng-if="$ctrl.errs.token">{{$ctrl.errs.token[0]}}</span>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer bg-info">
+    <button class="btn btn-success" type="button" ng-click="$ctrl.ok()">Authenticate</button>
+    <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Close</button>
+</div>

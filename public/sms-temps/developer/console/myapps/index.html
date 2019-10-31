@@ -1,0 +1,35 @@
+<div class="row justify-content-center">
+    <div class="col-11">
+        <h3 class="text-center my-3">My Apps</h3>
+        <ul class="list-unstyled">
+            <li class="list-item" ng-repeat="myapp in myapps">
+                <div class="row">
+                    <div class="col-12 col-sm-4">
+                        <strong>
+                            {{myapp.app_name|uppercase}}
+                        </strong>
+                    </div>
+                    <div class="col-12 col-sm-5">
+                        <p><b>Created: </b>{{myapp.created_at}}</p>
+                        <p><b>Updated: </b>{{myapp.updated_at}}</p>
+                    </div>
+                    <div class="col-12 col-sm-3">
+                        <a class="btn btn-sm btn-info" ui-sref="appdetail.home({id:myapp.id})">
+                            <span class="fa fa-eye"></span>
+                        </a>
+                        <a class="btn btn-sm btn-warning" ui-sref="appdetail.messages({id:myapp.id})">
+                            <span class="fa fa-envelope"></span>
+                        </a>
+                        <a class="btn btn-sm btn-info" ui-sref="appdetail.edit({id:myapp.id})">
+                            <span class="fa fa-edit"></span>
+                        </a>
+                        <button class="btn btn-sm btn-danger">
+                            <span class="fa fa-trash"></span>
+                        </button>
+                    </div>
+                </div>
+
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+<div class="model-header bg-info">
+    <h3 class="modal-title text-sm-center" id="modal-title">Buy SMS</h3>
+</div>
+<div class="modal-body bg-info" id="modal-body">
+    <form class="form">
+        <div class="form-group">
+            <label class="control-label">Enter Number of SMS</label>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span id="smsPrice">UShs: {{$ctrl.pricepreview|customCurrency:'/=':false}}</span>
+            <div>
+                <input type="text" ng-model="$ctrl.pay.sms_count" ng-class="{'is-invalid':$ctrl.errs.sms_count}"
+                    class="form-control" ng-change="$ctrl.calPreview()" ng-blur="$ctrl.calPreview(1)"
+                    placeholder="Enter SMS here...." />
+                <span class="invalid-feedback" role="alert"
+                    ng-if="$ctrl.errs.sms_count">{{$ctrl.errs.sms_count[0]}}</span>
+            </div>
+            <p class="help-block">The initial Amount is
+                {{$ctrl.smsValues.minp*$ctrl.smsValues.minv |customCurrency:'/=':false}}</p>
+        </div>
+        <div class="form-group">
+            <div class="">
+                <input type="tel" class="form-control" name="p_phone" ng-model="$ctrl.pay.p_phone" id="p_phone"
+                    ng-class="{'is-invalid':$ctrl.errs.p_phone}" placeholder="Enter number to be charged" />
+                <span class="text-danger" ng-if="$ctrl.errs.p_phone">{{$ctrl.errs.p_phone[0]}}</span>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer bg-info">
+    <button class="btn btn-success" type="button" ng-click="$ctrl.ok()">Initiate</button>
+    <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Close</button>
+</div>

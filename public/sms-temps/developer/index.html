@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="col-12">
+        <input type="checkbox" ng-model="isdev" id="dev-toggler">
+        <div class="dev-nav bg-secondary border-top border-light" ui-view="nav"></div>
+        <span class="bg-dark" id="dev-toggle-btn" ng-click="toggleDev()">
+            <span class="fa fa-code"></span>
+        </span>
+        <h3 class="text-center m-3">LinSMS Developers &nbsp;<span share-me share-title="LinSMS Developers"
+                share-link="https://lin-sms.com/developer"
+                share-message="Easily integrate your website or App with LinSMS Open Api."></span></h3>
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-11" ui-view="body"></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,73 @@
+<div class="container" id="app">
+    <div class="card col-xs-12 mt-4">
+        <div class="card-header">
+            <form id="connect" class="form-inline" role="form">
+                <label class="my-1 mr-2" for="app">App:</label>
+                <select class="form-control form-control-sm mr-2" name="app" id="app" ng-model="app">
+                    <option ng-repeat="app in apps" :value="app">{{ app.name }}</option>
+                </select>
+                <label class="my-1 mr-2" for="app">Port:</label>
+                <input class="form-control form-control-sm mr-2" v-model="port" placeholder="Port">
+                <button ng-if="! connected" type="submit" ng-click="connect()" class="mr-2 btn btn-sm btn-primary">
+                    Connect
+                </button>
+                <button ng-if="connected" type="submit" ng-click="disconnect()" class="btn btn-sm btn-danger">
+                    Disconnect
+                </button>
+            </form>
+            <div id="status"></div>
+        </div>
+        <div class="card-body">
+            <div v-if="connected && app.statisticsEnabled">
+                <h4>Realtime Statistics</h4>
+                <div id="statisticsChart" style="width: 100%; height: 250px;"></div>
+            </div>
+            <div v-if="connected">
+                <h4>Event Creator</h4>
+                <form>
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="form-control" ng-model="form.channel" placeholder="Channel">
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control" ng-model="form.event" placeholder="Event">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <div class="form-group">
+                                <textarea placeholder="Data" ng-model="form.data" class="form-control" id="data"
+                                    rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row text-right">
+                        <div class="col">
+                            <button type="submit" @click.prevent="sendEvent" class="btn btn-sm btn-primary">Send event
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <h4>Events</h4>
+            <table id="events" class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Socket</th>
+                        <th>Details</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="log in logs.slice().reverse()">
+                        <td><span class="badge" ng-class="getBadgeClass(log)">{{ log.type }}</span></td>
+                        <td>{{ log.socketId }}</td>
+                        <td>{{ log.details }}</td>
+                        <td>{{ log.time }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

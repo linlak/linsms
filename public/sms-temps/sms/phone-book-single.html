@@ -1,0 +1,45 @@
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-10">
+
+        <form class="form" ng-submit="savedata()">
+            <h3 class="text-center">{{group.title}}</h3>
+            <p class="text-center">
+                <b>Created: </b>{{group.created}}&nbsp;
+                <b>Updated: </b>{{group.last_updated}}&nbsp;<br>
+                <b>No of Contacts: </b>{{group.contacts.length}}&nbsp;
+            </p>
+            <div class="form-group">
+                <label class="control-label">Type Numbers</label>
+                <span uib-dropdown class="dropdown float-right">
+                    <span class="btn btn-sm btn-warning" ng-click="emptyResp()" ng-show="group.contacts.length"><span
+                            class="fa fa-trash-alt"></span></span>
+                    <span class="btn btn-sm btn-warning" ng-click="testResp()"
+                        ng-show="group.contacts.length">Clean</span>
+                    <span class="btn btn-sm btn-info dropdown-toggle" uib-dropdown-toggle>Options <span
+                            class="caret"></span></span>
+                    <ul class="dropdown-menu" id="recopt" role="menu" uib-dropdown-menu>
+                        <li class="text-center">
+                            <span class="btn btn-sm btn-block btn-primary" ng-click="openUploader()"><span
+                                    class="glyphicon glyphicon-upload"></span> Upload Recipients</span>
+                        </li>
+                    </ul>
+                </span>
+                <div>
+                    <textarea type="text" class="form-control auto-expand-input"
+                        placeholder="Enter Comma seperated phone numbers e.g 256751921465,256783198167" ng-list=", "
+                        ng-model="group.contacts">
+					</textarea>
+                    <p>Please enter comma (,) for best results</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-12 clearfix">
+                    <a ui-sref="phonebook.all" class="btn btn-sm btn-primary">
+                        <span class="fa fa-angle-left"></span> Back to Phonebook</a> <input type="submit"
+                        class="btn btn-sm btn-success float-right" ng-disabled="isSubmiting" name="submit" value="Save">
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>

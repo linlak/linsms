@@ -1,0 +1,15 @@
+<div class=" navbar-dark pl-2">
+    <ul class="navbar-nav ">
+        <li class="nav-item" ui-sref-active="active"><a ui-sref="home" class="nav-link">Home</a></li>
+        <li class="nav-item" ui-sref-active="active"><a ui-sref="about" class="nav-link">About Us</a></li>
+        <li class="nav-item" ui-sref-active="active"><a ui-sref="prices" class="nav-link" ng-show="!isUser"
+                ui-sref-active="active">Pricing</a></li>
+        <li class="nav-item" ui-sref-active="active"><a ui-sref="mtd" class="nav-link">Payment Methods</a></li>
+        <li class="nav-item" ui-sref-active="active"><a ui-sref="contact" class="nav-link">Contact</a></li>
+        <li class="nav-item" ui-sref-active="active"><a ui-sref="privacy" class="nav-link">Privacy</a></li>
+        <li class="nav-item" ui-sref-active="active"><a ui-sref="terms" class="nav-link">Terms and Conditions</a></li>
+        <li class="nav-item" ng-class="{'active':isActive('my_pay') }"><a ui-sref="dev" class="nav-link">Developer</a></li>
+        <li class="nav-item" ui-sref-active="active"><a href="" class="nav-link" ng-show="isUser"
+                ng-click="logout()">Logout</a></li>
+    </ul>
+</div>

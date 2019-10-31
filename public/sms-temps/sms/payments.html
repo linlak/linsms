@@ -1,0 +1,112 @@
+<div class="row">
+    <div class="col-12">
+        <h3 class="text-center my-3">My Payments</h3>
+        <div class="list-group">
+            <script type="text/ng-template" id="list">
+                <p>
+					<b>Ref:</b>&nbsp; {{pay.p_ref}}&nbsp;
+					<b>SMS:</b>&nbsp; {{pay.sms_count}}&nbsp;
+					<b>Me2U:</b>&nbsp; {{pay.is_m2u}}&nbsp;
+					<b>SMS Received:</b>&nbsp; {{pay.me2u_count}}&nbsp;
+					<b>Total SMS:</b>&nbsp; {{pay.total}}&nbsp;
+					<b>Remaining SMS:</b>&nbsp; {{pay.remaining}}&nbsp;
+					<b>Intitiated:</b>&nbsp; {{pay.start_date}}&nbsp;
+					<b>Amount:</b>&nbsp; {{pay.sms_price|customCurrency:'/=':false}}&nbsp;
+					<b>Status:</b>&nbsp; 
+					<span ng-show="pay.status===1">Verified</span>
+					<span ng-show="pay.status===0">Pending</span>
+					<span ng-show="pay.status===2">Blocked</span>
+					&nbsp;
+					<strong class="text-dark">View more..</strong>
+				</p>
+			</script>
+            <script type="text/ng-template" id="pay-form">
+                <div>
+					<h4 class="text-center">Pay Now</h4>
+					<div class="row">
+						<div class="col-12">
+							<div class="row my-2">
+								<div class="col-12">
+									Your account will be charged {{cur_pay.sms_price|customCurrency:'/=':false}} plus 3% (percent) provider charges.
+									<br>
+									You will therefore pay <strong class="bg-dark p-2">
+									{{(walletpay||0)|customCurrency:'/=':false}}</strong>
+								</div>
+							</div>
+							<form class="form" ng-submit="payNow()" novalidate>
+								<div class="form-group" ng-show="false">
+									<select class="form-control">
+										<option>Payment Method</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<input type="tel" name="phone" class="form-control" ng-model="pNow.p_phone"
+									ng-class="{'is-invalid':errs.p_phone}" placeholder="Number to be Charged">
+									<p class="help-block">The number where the amount will be deducted.</p>
+									<span ng-if="errs.p_phone" class="text-danger">{{errs.p_phone[0]}}</span>
+								</div>
+								<div>
+									<input type="submit" name="submit" class="btn btn-sm btn-success" value="Pay">
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</script>
+            <script type="text/ng-template" id="pay-extras">
+                <p>
+					<b>Verified:</b>&nbsp; {{cur_pay.verify}}&nbsp;<br>
+					<b>Verified By:</b>&nbsp; {{cur_pay.verify_by}}&nbsp;<br>
+
+					<b>Pay't Method:</b>&nbsp; {{cur_pay.ntwk}}&nbsp;<br>
+					<b>Phone:</b>&nbsp; {{cur_pay.phone}}&nbsp;<br>
+					<b>Trans ID:</b>&nbsp; {{cur_pay.trans_id}}<br>
+
+					<span ng-if="cur_pay.b_fwd">
+						<b>Brought Forward:</b>&nbsp; {{cur_pay.b_fwd}}&nbsp;<br>
+						<b>From:</b>&nbsp; <button class="btn btn-sm btn-default" ng-click="showPayCB(cur_pay.b_frm)">{{cur_pay.b_frm_ref}}</button>&nbsp;<br>
+					</span>
+					<span ng-if="cur_pay.c_fwd">
+						<b>Carried Forward:</b>&nbsp; {{cur_pay.c_fwd}}&nbsp;<br>
+						<b>To:</b>&nbsp; <button class="btn btn-sm btn-default" ng-click="showPayCB(cur_pay.c_to)">{{cur_pay.c_to_ref}}</button>&nbsp;<br>
+						<b>Date:</b>&nbsp; {{cur_pay.c_date}}&nbsp;<br>
+					</span>
+					<b>Used SMS:</b>&nbsp; {{cur_pay.used}}&nbsp;<br>
+					<b>Shared SMS:</b>&nbsp; {{cur_pay.shared_sms}}&nbsp;<br>
+					<b>Remaining:</b>&nbsp; {{cur_pay.remaining}}
+					
+					&nbsp;
+				</p>
+			</script>
+            <script type="text/ng-template" id="pay-details">
+                <div>
+					<button class="btn btn-sm btn-danger float-left" ng-click="cancelDet()">X</button>
+					<h3 class="text-center">Payment Details</h3>
+					<div class="row mt-3">
+						<div class="col-12 px-2 col-sm-6 px-sm-0">
+							<p>
+								<b>Ref:</b>&nbsp; {{cur_pay.p_ref}}&nbsp;<br>
+								<b>SMS:</b>&nbsp; {{cur_pay.sms_count}}&nbsp;<br>
+								<b>Me2U:</b>&nbsp; {{cur_pay.is_m2u}}&nbsp;<br>
+								<b>SMS Received:</b>&nbsp; {{cur_pay.me2u_count}}&nbsp;<br>
+								<b>Total SMS:</b>&nbsp; {{cur_pay.total}}&nbsp;<br>
+								<b>Remaining SMS:</b>&nbsp; {{cur_pay.remaining}}&nbsp;<br>
+								<b>Intitiated:</b>&nbsp; {{cur_pay.start_date}}&nbsp;<br>
+								<b>Amount:</b>&nbsp; {{cur_pay.sms_price|customCurrency:'/=':false}}&nbsp;<br>
+								<b>Status:</b>&nbsp; 
+								<span ng-show="cur_pay.status===1">Verified</span>
+								<span ng-show="cur_pay.status===0">Pending</span>
+								<span ng-show="cur_pay.status===2">Blocked</span>
+								&nbsp;
+							</p>
+						</div>
+						<div class="col-12 px-3 col-sm-6" ng-include="showPayStatus()">					
+						</div>
+					</div>
+				</div>
+			</script>
+            <div class="list-group-item bg-primary my-1 rounded shadow-sm " ng-repeat="pay in payments"
+                ng-include="showTemp(pay,$index)" ng-click="showPay(pay,$index)"></div>
+        </div>
+    </div>
+</div>

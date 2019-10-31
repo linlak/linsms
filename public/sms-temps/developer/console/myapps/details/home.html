@@ -1,0 +1,68 @@
+<div class="px-2 mt-2">
+    <h5 class="card-heading text-center">{{myapp.app_name|uppercase}}</h5>
+    <div class="card-text">
+        <p><b>Created:</b> {{myapp.created_at}}
+            &nbsp;&nbsp; <span class="clearfix d-sm-none"></span>
+            <b>Updated:</b> {{myapp.updated_at}}</p>
+    </div>
+    <h5 class="card-heading">Auth Keys</h5>
+    <div class="alart alert-danger mb-3 p-2 rounded">
+        <b>Cation</b> <span class="fa fa-warning"></span> Never use your sever secret in unsecure enviroments. In you
+        feel your key is not secure or licked please refresh it and update you api credentials.
+    </div>
+    <div class="card-text my-3">
+        <p><b>Client Id:</b> &nbsp;&nbsp;{{myapp.c_id|stringObscure:0:3:show_client}}&nbsp;&nbsp;
+            <span class="clearfix d-sm-none"></span>
+            <span class="float-sm-right">
+                <button class="btn btn-sm mr-3" ng-click="showClient()"
+                    ng-class="show_client?'btn-danger':'btn-success'" uib-tooltip="Show/Hide"
+                    ng-disabled="isSubmiting"><span class="fa fa-eye"></span></button>
+                <button class="btn btn-dark btn-sm mr-3" ng-click="clipboard(myapp.c_id)"
+                    uib-tooltip="Copy to clipboard" ng-disabled="isSubmiting"><span
+                        class="fa fa-clipboard"></span></button>
+                <button class="btn btn-secondary btn-sm" uib-tooltip="Refresh Key" ng-click="refClient()"
+                    ng-disabled="isSubmiting">&#8635;</button>
+            </span>
+        </p>
+        <p><b>Secret: </b>&nbsp;&nbsp;
+            {{myapp.s_key|stringObscure:0:3:show_secret}}&nbsp;&nbsp;<span class="clearfix d-sm-none"></span>
+            <span class="float-sm-right">
+                <button ng-click="showSecret()" ng-class="show_secret?'btn-danger':'btn-success'"
+                    class="btn btn-sm mr-3" uib-tooltip="Show/Hide" ng-disabled="isSubmiting"><span
+                        class="fa fa-eye"></span></button>
+                <button class="btn btn-dark btn-sm mr-3" ng-click="clipboard(myapp.s_key)"
+                    uib-tooltip="Copy to clipboard" ng-disabled="isSubmiting"><span
+                        class="fa fa-clipboard"></span></button>
+                <button class="btn btn-secondary btn-sm" ng-disabled="isSubmiting" ng-click="refSecret()"
+                    uib-tooltip="Refresh Key">&#8635;</button>
+            </span>
+        </p>
+    </div>
+    <div class="card-text">
+        <h5 class="card-heading text-center my-2">Enabled Apis</h5>
+        <p class="border-bottom h-5">
+            <b>SMS Api</b>
+            <button class="btn btn-sm mr-3 float-right clear-right"
+                ng-class="myapp.app_conf.sms_enabled?'btn-danger':'btn-success'" ng-disabled="isSubmiting"
+                ng-click="editConf('sms')">
+                {{myapp.app_conf.sms_enabled?'Disable':'Enable '}}
+            </button>
+        </p>
+        <p class="border-bottom h-5">
+            <b>Funds transfer Api</b>
+            <button class="btn btn-sm mr-3 float-right clear-right"
+                ng-class="myapp.app_conf.funds_enabled?'btn-danger':'btn-success'" ng-disabled="isSubmiting"
+                ng-click="editConf('funds')">
+                {{myapp.app_conf.funds_enabled?'Disable':'Enable '}}
+            </button>
+        </p>
+        <p class="border-bottom h-5">
+            <b>Payout Api</b>
+            <button class="btn btn-sm mr-3 float-right clear-right"
+                ng-class="myapp.app_conf.payout_enabled?'btn-danger':'btn-success'" ng-disabled="isSubmiting"
+                ng-click="editConf('payout')">
+                {{myapp.app_conf.payout_enabled?'Disable':'Enable '}}
+            </button>
+        </p>
+    </div>
+</div>

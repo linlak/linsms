@@ -1,0 +1,114 @@
+<h3 class="text-center">{{sub_title}}</h3>
+<div class="row">
+<div class="col-sm-7">
+<p ng-if="pay.status==='1'&&pay.c_to"><b class="invalid-feedback" role="alert">{{pay.c_fwd}}</b> were carried forward to <a ui-sref="a_sms.p_det({page:pay.c_to})">{{pay.c_to}}</a></p>
+<p><b>UserName:</b>&nbsp;&nbsp;{{pay.username}}
+<b>Payment Ref:</b>&nbsp;&nbsp;{{pay.p_ref}}&nbsp; &nbsp;
+<b>Status:</b>&nbsp;
+<span class="text-success" ng-show="pay.status==='1'">Verified</span>
+<span class="invalid-feedback" role="alert" ng-show="pay.status==='0'">Pending</span>
+<br><b>SMS <span ng-show="pay.status==='1'&&pay.is_m2u==='0'">Bought</span>
+	<span ng-show="pay.status==='1'&&pay.is_m2u==='1'">Received</span>
+	<span ng-show="pay.status==='0'">to be Credited</span>:</b>&nbsp;
+	<span ng-if="pay.is_m2u==='0'">{{pay.sms_count}}<br><b>SMS Amount:</b>&nbsp;{{pay.smsPrice}}
+	<br><b>Initiated:</b> &nbsp;&nbsp;{{pay.startDate}}</span>
+	<span ng-if="pay.is_m2u==='1'">{{pay.me2u_count}}		
+	<br><b>Received:</b> &nbsp;&nbsp;{{pay.startDate}}</span>
+	<br>
+		<span ng-if="pay.status==='1'">
+			<b >Total SMS:</b>&nbsp;&nbsp;{{pay.tsms_count}}&nbsp;&nbsp;
+			<b>SMS Used:</b>&nbsp;&nbsp;{{pay.usedSms}}
+			<br>		
+			<b>SMS Shared:</b>&nbsp;&nbsp;{{pay.sharedSms}}
+			&nbsp;&nbsp;<b>Remaing:</b>&nbsp;&nbsp;{{pay.remaining}}
+			<br><b>Last Used:</b>&nbsp;&nbsp;{{pay.lastUsed||'N/A'}}
+		
+			<span ng-if="pay.b_frm">
+				<br><b>Brought Forward:</b>&nbsp;&nbsp;{{pay.b_fwd}}
+				<br><b>From:</b>&nbsp;&nbsp;<a ui-sref="a_sms.p_det({page:pay.b_frm})">{{pay.b_frm}}</a>
+			</span>
+			<span ng-if="pay.c_to">
+				<br><b>Carried Forward:</b>&nbsp;&nbsp;{{pay.c_fwd}}
+				<br><b>Date:</b>&nbsp;&nbsp;{{pay.c_date}}
+				<br><b>To:</b>&nbsp;&nbsp; <a ui-sref="a_sms.p_det({page:pay.c_to})">{{pay.c_to}}</a>
+			</span>
+			<span ng-if="pay.is_m2u==='0'">
+				<br><b>Verified:</b>&nbsp;&nbsp;{{pay.verify}}
+				<br><b>Verified By:</b>&nbsp;&nbsp;{{pay.adminname}}<br>
+				<b>Post: </b>&nbsp;&nbsp;{{pay.admin_post}}	
+			</span>	
+			<span ng-if="pay.is_m2u==='1'">
+				<br><b>Received From:</b>&nbsp;&nbsp;{{pay.sender}}
+				<br><b>Sent:</b>&nbsp;&nbsp;{{pay.init_date}}<br>
+				<!-- <b>Post: </b>&nbsp;&nbsp;{{pay.admin_post}}	 -->
+			</span>	
+			</span>
+		</p>
+	</div>
+	<div class="col-sm-5">
+		<h3 class="text-center">Actions</h3>			
+			<span ng-show="pay.status==='1'">
+				<span ng-show="pay.cur_id===pay.p_id">
+					<span ng-if="pay.isUsable==='1'">
+					<p class="text-danger text-center" ng-if="pay.remaining===0"><br>This Payment is Depleted.. </p>
+					<span ng-show="pay.remaining>0">
+						<p><span class="h3 text-center">Suspend Payment</span></p>
+						<form class="form"  id="spndfrm" method="POST" ng-submit="suspendPay()">				
+						<div class="form-group">
+						<label class="control-label" for="reason">Reason: </label>
+						<div>
+						<input type="text" class="form-control" name="reason" ng-model="susPay.reason" id="reason" placeholder="Give reason...."/>
+						<span class="invalid-feedback" role="alert" >{{errs.reason}}</span>
+						</div>	
+						</div>	
+						<input type="submit" name="suspend" value="Suspend" class="btn btn-danger btn-lg"/>
+						</form>
+					</span>
+				</span>
+				<span ng-if="pay.isUsable==='0'">
+					<p><span class="h3 text-center">Payment Suspended</span><br>
+						<span class="invalid-feedback" role="alert">{{pay.reason}}</span>
+					</p>
+					<center>
+						<button class="btn btn-success btn-lg" ng-click="reActivate()">Reactivate</button>
+					</center>
+				</span>
+			</span>
+			</span>
+			<span ng-show="pay.status==='0'">
+				<p><span class="h3 text-center">Verify Payment</span></p>		
+				<form class="form" novalidate autocomplete="off" id="vrfyfrm" method="POST" ng-submit="verifyPay()">						
+				<div class="form-group">
+				<label class="control-label" for="reason">Payment Method: </label>
+				<div>
+					<select type="text" class="form-control" name="ntwk" ng-model="verPay.ntwk" >
+					<option value="">Choose Method</option>
+					<option value="mtn">MTM Money</option>
+					<option value="airtel">Airtel Money</option>
+					<option value="cash">Cash</option>
+					</select>
+					<span class="invalid-feedback" role="alert" id="ntwkErr">{{errs.ntwk}}</span>
+					</div>	
+					</div>
+					
+					<div class="form-group">
+					<label class="control-label" >Phone: </label>
+					<div>
+					<input type="text" class="form-control" name="p_phone" ng-model="verPay.p_phone" placeholder="Enter Phone"/>
+					<span class="invalid-feedback" role="alert" id="p_phoneErr">{{errs.p_phone}}</span>
+					</div>	
+					</div>
+					<div class="form-group" ng-show="verPay.ntwk!=='cash'">
+					<label class="control-label" >Trans ID: </label>
+					<div>
+					<input type="text" class="form-control" name="trans_id" ng-model="verPay.trans_id" placeholder="Trans ID"/>
+					<span class="invalid-feedback" role="alert" id="trans_idErr">{{errs.trans_id}}</span>
+					</div>	
+					</div>	
+					<input type="submit" name="verify"  value="Verify" class="btn btn-success btn-lg"/>
+					</form>
+				</span>
+		</div>
+					</div>
+<center class="invalid-feedback" role="alert" ng-show="!pay">No Records were Found</center>
+		

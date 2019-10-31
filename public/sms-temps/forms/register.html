@@ -1,0 +1,81 @@
+<div class="row">
+    <div class="col-10 col-sm-6 offset-1 offset-sm-3 p-3">
+        <form class="form shadow-lg bg-info p-3 mt-5 rounded" novalidate ng-submit="register()">
+            <h3 class="text-center my-3">Register &nbsp;<span share-me share-title="Register | LinSMS"
+                    share-link="https://lin-sms.com/register.html"
+                    share-message="Register with LinSMS to start sending bulk SMS at friendly prices."></span></h3>
+            <div class="form-group">
+                <div>
+                    <input type="text" class="form-control" name="fullname" placeholder="Full name" autocomplete="name"
+                        ng-class="{'is-invalid':errs.fullname}" ng-model="reg_user.fullname">
+                    <span class="invalid-feedback" role="alert" ng-if="errs.fullname">{{errs.fullname[0]}}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+                    <input type="email" class="form-control" name="email" placeholder="Email" autocomplete="email"
+                        ng-class="{'is-invalid':errs.email}" ng-model="reg_user.email">
+                    <span class="invalid-feedback" role="alert" ng-if="errs.email">{{errs.email[0]}}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+                    <input type="tel" class="form-control" name="phone" placeholder="Phone Number" autocomplete="tel"
+                        ng-class="{'is-invalid':errs.phone}" ng-model="reg_user.phone">
+                    <span class="invalid-feedback" role="alert" ng-if="errs.phone">{{errs.phone[0]}}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+                    <input type="text" class="form-control" name="username" autocomplete="username"
+                        ng-class="{'is-invalid':errs.username}" placeholder="Username" ng-model="reg_user.username">
+                    <span class="invalid-feedback" role="alert" ng-if="errs.username">{{errs.username[0]}}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Gender:</label>
+                <div>
+                    <label><input type="radio" name="gender" ng-model="reg_user.gender" value="male">Male</label>
+                    <label><input type="radio" name="gender" ng-model="reg_user.gender" value="female">Female</label>
+
+                </div>
+                <span class="text-danger" ng-if="errs.gender">{{errs.gender[0]}}</span>
+            </div>
+            <div class="form-group">
+                <div>
+                    <input type="password" class="form-control" name="pass" autocomplete="new-password"
+                        ng-class="{'is-invalid':errs.password}" placeholder="Password" ng-model="reg_user.password">
+                    <span class="invalid-feedback" role="alert" ng-if="errs.password">{{errs.password[0]}}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+                    <input type="password" class="form-control" name="pass1" autocomplete="new-password"
+                        placeholder="Repeat Password" ng-model="reg_user.password1">
+                    <span class="invalid-feedback" role="alert">{{errs.password1}}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+                    <p class="help-block">Before you register, you agree that you have read and accept to follow the <a
+                            ui-sref="terms">Terms and Conditions</a> that govern this website and satisfied by our <a
+                            ui-sref="privacy">Privacy Policy</a> </p>
+                    <label><input type="checkbox" class="" name="terms" ng-true-value="1" ng-false-value="0"
+                            ng-model="reg_user.terms"> I Accept</label>
+
+                </div>
+            </div>
+
+            <div class="form-group clearfix">
+                <div>
+                    <input type="submit" ng-disabled="isSubmiting||reg_user.terms===0"
+                        class="btn btn-sm btn-primary float-right" name="submit" value="Register">
+                </div>
+            </div>
+            <div class="text-center mt-2">
+                <p>Already here? <a ui-sref="login" class="btn btn-sm btn-outline-success">Login</a></p>
+            </div>
+
+        </form>
+    </div>
+</div>

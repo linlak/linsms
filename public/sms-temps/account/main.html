@@ -1,0 +1,23 @@
+<div class="row justify-content-center">
+    <div class="col-sm-6">
+        <div class="card bg-info shadow-sm mt-3 mt-sm-5">
+            <div class="card-header bg-dark text-white">
+                <ul class="nav nav-pills card-header-pills text-white">
+                    <li class="nav-item" ui-sref-active="active"><a ui-sref="account.profile"
+                            class="nav-link text-white">Profile</a></li>
+                    <li class="nav-item" ui-sref-active="active"><a ui-sref="account.edit"
+                            class="nav-link text-white">Edit
+                            Profile</a></li>
+                    <li class="nav-item" ui-sref-active="active"><a ui-sref="settings"
+                            class="nav-link text-white">Settings</a>
+                    </li>
+                    <!-- <li><a href=""></a></li> -->
+                </ul>
+            </div>
+            <div class="card-body">
+                <div ui-view="body"></div>
+            </div>
+        </div>
+
+    </div>
+</div>

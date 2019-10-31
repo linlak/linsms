@@ -1,0 +1,73 @@
+<div class="row">
+    <div class="col-12">
+        <h3 class="text-center m-3">Recent SMS</h3>
+        <script type="text/ng-template" id="sms-list">
+            <div class="list-group">
+				<div class="list-group-item bg-primary mb-1 shadow-sm" ng-repeat="msg in msgs" ng-include="listTemp(msg,$index)"></div>
+			</div>
+		</script>
+        <script type="text/ng-template" id="no-pay">
+            <div class="text-center">
+				<span class="h1 text-danger">Oops!!..</span><br>
+				It seems you have not made any payment before.<br>
+				You can buy SMS by clicking the Button Bellow.<br><br>
+				<a ui-sref="buy" class="btn btn-success btn-lg">Buy Here</a>
+			</div>
+		</script>
+        <script type="text/ng-template" id="no-sms">
+            <center>
+				<span class="h1 text-danger">Oops!!..</span><br>
+				It seems you have not sent any Messages.<br>
+				You can Send SMS by clicking the Button Bellow.<br><br>
+				<a ui-sref="send" class="btn btn-secondary btn-lg">Create Message</a>
+			</center>
+		</script>
+        <script type="text/ng-template" id="sms-list-item">
+            <p>
+				<b>Sender ID:</b>&nbsp;&nbsp; {{msg.sender_id}}&nbsp;&nbsp;
+				<b>Status:</b>&nbsp;&nbsp;
+				<span  ng-show="msg.status==='1'">Sent</span>
+				<span  ng-show="msg.status==='0'">Pending
+				</span>&nbsp;&nbsp;
+				<b>SMS Count:</b>&nbsp; {{msg.msg_cnt}}&nbsp;&nbsp;
+				<b>Recipients:</b>&nbsp; {{msg.recipients}}&nbsp;&nbsp;
+				<b>Units Used:</b>&nbsp; {{msg.sms_sent}}&nbsp;&nbsp;
+				<!-- <b>Units Used:</b>&nbsp; {{msg.sms_sent}}&nbsp;&nbsp; -->
+				<b>From:</b>&nbsp;&nbsp;{{msg.p_ref}}&nbsp;&nbsp;
+				<b>Sent:</b>&nbsp; {{msg.sent_date}}&nbsp;&nbsp;
+				<button class="btn btn-sm btn-secondary" ng-click="loadSMS(msg.id,$index)">View Details</button>
+			</p>
+		</script>
+        <script type="text/ng-template" id="sms-details">
+            <button class="btn btn-sm btn-warning float-left" ng-click="cancelSMS()">Close</button>
+			<h3 class="text-center">Message Details</h3>
+			<div>
+				<p class="text-right"><b>Date:</b>&nbsp;&nbsp;&nbsp;<u>{{msge.sent_date}}</u>&nbsp;&nbsp;&nbsp;</p>
+				<p><b>Sender ID:</b>&nbsp;&nbsp;{{msge.sender_id}}&nbsp;</p>
+				<p>
+				<b>Recipients:</b>&nbsp;<a ui-sref="send({id:[msge.id],action:'reuse'})">Reuse Group</a></p>
+				<textarea class="form-control auto-expand-input" readonly="true" ng-model="msge.recipients"  type="text" ng-list=", "></textarea>
+				<p>
+					<b>Message:</b>&nbsp;&nbsp;&nbsp;<a ui-sref="send({id:[msge.id],action:'resend'})">Resend</a>
+					<br>
+					{{msge.message}}
+				</p>
+				<p>
+					<b>Statistics:</b><br>
+					<b>SMS Length:</b>&nbsp;&nbsp;<span class="stat">{{msge.msg_len}}</span>&nbsp;
+					<b>SMS Count:</b>&nbsp;&nbsp;<span class="stat">{{msge.msg_cnt}}</span>&nbsp;
+					<b>Sent:</b>&nbsp;&nbsp;<span class="stat">{{msge.recpct}}</span>&nbsp;
+					<b>Failed:</b>&nbsp;&nbsp;<span class="stat">{{msge.sms_failed}}</span>&nbsp;
+					<b>SMS Units Used:</b>&nbsp;&nbsp;<span class="stat">{{msge.sms_sent}}</span>&nbsp;
+					<br><br><b>From:</b>&nbsp;{{msge.p_ref}}&nbsp;
+					<b>Initial Balance:</b>&nbsp;&nbsp;<span class="stat">{{msge.sms_before}}</span> SMS&nbsp;
+					<b>Balance After:</b>&nbsp;&nbsp;<span class="stat">{{msge.sms_after}}</span> SMS&nbsp;<br>
+				</p>
+				<div class="clearfix">
+					<button class="btn btn-sm btn-warning " ng-click="cancelSMS()">Close</button>
+				</div>
+			</div>
+		</script>
+        <div ng-include="loadMain(me)"></div>
+    </div>
+</div>
