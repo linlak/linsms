@@ -13,7 +13,7 @@
         "beyondcode/laravel-websockets": "^1.1",
         "fideloper/proxy": "^4.0",
         "genealabs/laravel-model-caching": "^0.6.2",
-        "laravel/framework": "5.8.*",
+        "laravel/framework": "^6.0",
         "laravel/socialite": "^4.1",
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.8",

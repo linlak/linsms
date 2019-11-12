@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
             ->daily();
         $schedule->command('queue:restart')
             ->daily();
-        $schedule->command('lin:sms_queue')
+        $schedule->command('linsms:sms_queue')
             ->everyMinute();
         $schedule->command('lin:clear-activation')
             ->everyFiveMinutes();

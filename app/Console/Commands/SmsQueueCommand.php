@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use Carbon\Carbon;
-use App\QueuedSms;
-use Illuminate\Support\Facades\Date;
 use App\Jobs\DeferedSms;
+use App\QueuedSms;
+use Carbon\Carbon;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Date;
 
 class SmsQueueCommand extends Command
 {
@@ -15,7 +15,7 @@ class SmsQueueCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'lin:sms_queue';
+    protected $signature = 'linsms:sms_queue';
 
     /**
      * The console command description.

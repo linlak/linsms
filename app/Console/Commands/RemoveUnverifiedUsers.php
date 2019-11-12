@@ -2,9 +2,10 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\SmsPayment;
+use App\User;
 use Carbon\Carbon;
+use Illuminate\Console\Command;
 
 class RemoveUnverifiedUsers extends Command
 {
@@ -40,5 +41,9 @@ class RemoveUnverifiedUsers extends Command
     public function handle()
     {
         //
+        $users = User::where(function ($query) {
+            $query->where('status', '0');
+        })->whereOr(function ($query) { })->get();
+        $this->info('Found ' . $users->count());
     }
 }

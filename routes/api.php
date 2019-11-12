@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 
+Route::get('gallery', 'MainController@gallery');
 Route::post('easy', 'WebhookController@easyPay');
 Route::get('easy-test', 'HomeController@testPayment');
 Route::middleware('auth:api')->get('/user', function (Request $request) {
@@ -10,6 +11,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/page_stats', 'SitemapController@store');
 Route::prefix('sms')->group(__DIR__ . '/api/sms.php');
 Route::prefix('main')->group(__DIR__ . '/api/main.php');
+
 Route::middleware('auth')->prefix('profile')->group(__DIR__ . '/api/profile.php');
 Route::middleware('auth')->prefix('administration')->group(__DIR__ . '/api/admin.php');
 Auth::routes();

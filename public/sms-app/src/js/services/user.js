@@ -1,6 +1,6 @@
 define(['app'], function (app) {
     'use strict';
-    app.service('user', function (hookRunner, $log, tokenService, $q, $rootScope, idbService, $timeout, pusherService) {
+    app.service('user', function (hookRunner, $log, tokenService, $q, $rootScope, idbService, $timeout, pusherService, $state, pageService) {
         let self = this;
         self.user_det = "user_details";
         self.isUser = false;
@@ -65,9 +65,16 @@ define(['app'], function (app) {
                 self.sms_count = 0;
             self.usableSms = '0';
             self.usableReason = '';
+
             if (!keepToken) {
                 clearToken();
                 applyHooks();
+            } else {
+                idbService.store.objStore('curuser', 'readwrite').then(st => {
+                    st.delete(self.user_det).then(r => {
+                        applyHooks();
+                    });
+                });
             }
 
         };
@@ -92,11 +99,14 @@ define(['app'], function (app) {
                             self.sms_count = data.sms_count;
                             self.usableSms = data.isUsable;
                             self.usableReason = data.reason;
+                            self.first_load = false;
                             subscribe();
                         } else {
+                            self.first_load = false;
                             resetAuth(true);
                         }
                     } else {
+                        self.first_load = false;
                         resetAuth(true);
                     }
                     self.first_load = false;
@@ -146,7 +156,6 @@ define(['app'], function (app) {
             return (self.isUser && self.user_role === 'super');
         }
 
-
         function isPending() {
             return (self.isUser && self.status === 0);
         }
@@ -163,7 +172,6 @@ define(['app'], function (app) {
             if (tagName in self.hooks) {
                 delete(self.hooks.tagName);
             }
-
         }
 
         function isLoggedIn() {
@@ -209,11 +217,61 @@ define(['app'], function (app) {
             }
             return self.unread_notifications;
         }
+        let redCheck = () => {
+            if (pageService.isRedirect()) {
+                return;
+            }
+            let curState = $state.current;
+            let auth = (curState.auth) ? curState.auth : false;
+            let isAuth = (curState.isAuth) ? curState.isAuth : false;
+            let redTo = (curState.redTo) ? curState.redTo : 'login';
+            let clrAuth = (curState.clrAuth) ? curState.clrAuth : false;
+            let admin = (curState.admin) ? curState.admin : false;
+            let issuper = (curState.isSuper) ? curState.isSuper : false;
+            let hasSms = (curState.hasSms) ? curState.hasSms : false;
+
+            if (!isLoggedIn()) {
+                if (auth) {
+                    pageService.enRedirect();
+                    return $state.go(redTo);
+                }
+            } else {
+                if (!hasSMS()) {
+                    if (hasSms || (redTo === 'send' || redTo === 'sent')) {
+                        pageService.enRedirect();
+                        redTo = 'buy';
+                        return $state.go(redTo);
+                    }
+
+                }
+                if (isAuth) {
+                    pageService.enRedirect();
+                    $state.go(redTo);
+                }
+                if (!isAdmin()) {
+                    if (admin) {
+                        pageService.enRedirect();
+                        return $state.go('dash.home');
+                    }
+                } else {
+                    if (!isSuper()) {
+                        if (issuper) {
+                            pageService.enRedirect();
+                            return $state.go('admin.home');
+                        }
+                    }
+                }
+            }
+        };
+        let firstLoad = () => {
+            return self.first_load;
+        };
         $timeout(init(), 100);
         tokenService.setTokenHook('user_service', init);
         return ({
             isLoggedIn: isLoggedIn,
             isAdmin: isAdmin,
+            // isSuper: isAdmin,
             getName: getName,
             getSMS: getSMS,
             setHook: setHook,
@@ -223,12 +281,18 @@ define(['app'], function (app) {
             setUser: setUser,
             isSuper: isSuper,
             getEmail: getEmail,
-            first_load: self.first_load,
+            firstLoad: firstLoad,
             hasSMS: hasSMS,
             getUsable: getUsable,
             getReason: getReason,
             init: init,
             unread_notifications: unread_notifications,
+            redCheck: redCheck,
+            isActive: isActive,
+            isPending: isPending,
+            getRole: getRole,
+            setWebHook: setWebHook,
+            unsetWebHook: unsetWebHook
         });
     });
 });

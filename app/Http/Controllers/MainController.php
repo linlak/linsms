@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Services\Conf\WebConf;
 use App\Services\Traits\MyVariables;
+use Illuminate\Http\Request;
 
 class MainController extends Controller
 {
@@ -37,5 +37,11 @@ class MainController extends Controller
         $output = $this->genRss('LinSMS services', '', 'https://lin-sms.com', 'Copyright (C) 2018 lin-sms.com. All rights reserved', $items);
         header("Content-Type: application/rss+xml; charset=ISO-8859-1");
         echo ($output);
+    }
+    public function gallery()
+    {
+        $output = [['id' => 1, 'url' => 'http://localhost/images/linsms.png']];
+        $this->_setResults('images', $output);
+        return $this->_showResult();
     }
 }

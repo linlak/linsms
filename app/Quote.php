@@ -2,12 +2,14 @@
 
 namespace App;
 
+use App\Services\Traits\Relations\HasComments;
+use App\Services\Traits\Relations\HasLikes;
 use App\Services\Traits\Relations\UserTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class Quote extends Model
 {
-    use UserTrait;
+    use UserTrait, HasComments, HasLikes;
     //
     protected $fillable = [
         'body',

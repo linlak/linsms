@@ -29,7 +29,7 @@
 								<div class="col-12">
 									Your account will be charged {{cur_pay.sms_price|customCurrency:'/=':false}} plus 3% (percent) provider charges.
 									<br>
-									You will therefore pay <strong class="bg-dark p-2">
+									You will therefore pay <strong class="bg-warning p-2">
 									{{(walletpay||0)|customCurrency:'/=':false}}</strong>
 								</div>
 							</div>
@@ -105,7 +105,7 @@
 					</div>
 				</div>
 			</script>
-            <div class="list-group-item bg-primary my-1 rounded shadow-sm " ng-repeat="pay in payments"
+            <div class="list-group-item my-1 rounded shadow-sm " ng-repeat="pay in payments"
                 ng-include="showTemp(pay,$index)" ng-click="showPay(pay,$index)"></div>
         </div>
     </div>

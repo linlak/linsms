@@ -12,7 +12,7 @@
 }(this, function (angular) {
     'use strict';
     angular = (angular && angular.module) ? angular : window.angular;
-    return angular.module('ngServices', ['toaster', 'pusher-angular'])
+    return angular.module('ngServices', ['toaster', 'pusher-angular', 'ui.bootstrap'])
         .provider('$linstore', function () {
             var storageKey = "lin_store";
             var web_title = '';
@@ -169,6 +169,9 @@
                         });
                         store.ifNotExists(upgradeDb, 'curuser', {
                             keyPath: 'id'
+                        });
+                        store.ifNotExists(upgradeDb, 'crawrable_pages', {
+                            keyPath: 'page_url'
                         });
                     }).then(function (db) {
                         return store.db = db;
@@ -434,7 +437,7 @@
 			            class="fa fa-share fa-sm"></span> share</span>`
             });
         })
-        .service('pageService', function ($window, hookRunner, alertService, $q) {
+        .service('pageService', function ($window, hookRunner, alertService, $q, idbService, $log, httpService) {
 
             let self = this;
 
@@ -510,6 +513,32 @@
                 }
 
             };
+            let sendCrawrable = function (crawData) {
+
+                idbService.store.objStore('crawrable_pages', 'readwrite').then(st => {
+                    st.get(crawData.page_url).then(r => {
+                        if (!!r && !!r.page_url) {
+
+                            return;
+                        }
+                        httpService.postData('/api/page_stats', JSON.stringify(crawData)).then(r => {
+                            // $log.info(r, st, crawData);
+                            idbService.store.objStore('crawrable_pages', 'readwrite').then(st => {
+                                st.put(
+                                    crawData
+                                ).then(r => {
+                                    // $log.info(r);
+                                }, e => {
+                                    // $log.info(e);
+                                });
+                            }, e => {});
+                        }, e => {
+
+                        });
+                    });
+                });
+                //
+            };
             let readClipBoard = function () {
                 let d = $q.defer();
                 navigator.clipboard.readText().then(clipText => {
@@ -553,7 +582,8 @@
                 scroll: scroll,
                 getImg: getImg,
                 getPic: getPic,
-                getLogo: getLogo
+                getLogo: getLogo,
+                sendCrawrable: sendCrawrable
             });
 
         }).factory('httpInterceptor', ['$log', 'alertService', 'tokenService', '$q', 'pusherService', function ($log, alertService, tokenService, $q, pusherService) {
@@ -702,6 +732,7 @@
         }).service('titleService', function (hookRunner, $linstore, $log) {
             let self = this;
             self.hooks = [];
+            self.namedHooks = {};
             self.scrollTexthooks = {};
             self.pageTitle = 'Home';
             self.page_desc = 'Home';
@@ -711,16 +742,27 @@
             let setHooks = (hook) => {
                 self.hooks.push(hook);
             };
+            let deleteHook = (tagName) => {
+                delete self.namedHooks[tagName];
+            };
+            let setnamedHook = (tagName, hook) => {
+                self.namedHooks[tagName] = angular.copy(hook);
+            };
             let setTitle = (title, description = undefined) => {
                 self.pageTitle = title;
                 self.page_desc = description;
                 hookRunner.exec(self.hooks);
+                hookRunner.exec(self.namedHooks);
             };
-            let getTitle = () => {
+            let getTitle = (dontUpdate = true) => {
+                if (!dontUpdate) {
+                    return self.pageTitle;
+                }
                 document.title = self.pageTitle + ' ' + $linstore.web_title;
                 let page_desc = document.head.querySelector('meta[name="description"]');
                 page_desc.content = (!!self.page_desc) ? self.page_desc : self.def_desc;
             };
+
             let getScrollText = function () {
                 return self.scrollText;
             };
@@ -741,7 +783,9 @@
                 delScrollHook: delScrollHook,
                 setTitle: setTitle,
                 setHooks: setHooks,
-                getTitle: getTitle
+                getTitle: getTitle,
+                deleteHook: deleteHook,
+                setnamedHook: setnamedHook
             });
         }).service('navToggleService', ['$log', 'storage', 'hookRunner', '$state', function ($log, storage, hookRunner, $state) {
             let visibleNav = false;
@@ -1251,6 +1295,7 @@
                         }
                         reader.readAsDataURL(scope.fileInputprev);
                     });
+
                 }
             });
         }]).directive('fileInput', ['$parse', function ($parse) {
@@ -1450,6 +1495,43 @@
 
                 }
             }
+        })
+        .directive('linMarkdown', function () {
+            return ({
+                restrict: 'A',
+                scope: {
+                    linMarkdown: '@'
+                },
+                replace: true,
+                transclude: true,
+                template: `<div class="lin-markdown">
+                <div ng-bind-html="linMarkdown | wizMarkdownFltr" ></div>
+                </div>`
+            });
+        })
+        .controller('pickImagesCtrl', function ($uibModalInstance, images) {
+            let $ctrl = this;
+            $ctrl.images = [{
+                id: 1,
+                url: 'http://localhost/images/lin.png'
+            }];
+            $ctrl.image = "";
+            $ctrl.pick = (url) => {
+                $uibModalInstance.close(url);
+            };
+            $ctrl.cancel = () => {
+                $uibModalInstance.dismiss();
+            };
 
+            function applyData(r) {
+                if (r.images) {
+                    $ctrl.images = r.images;
+                }
+            }
+            applyData(images);
+        })
+        .run(function ($templateCache) {
+            $templateCache.put('pick-images.html', "<div class=\"modal-header bg-info\"><h3 class=\"modal-title text-center\" id=\"modal-title\">Pick Image</h3></div><div class=\"modal-body bg-info\" id=\"modal-body\"><div class=\"row\"><div class=\"col-2 col-sm-3\" ng-repeat=\"img in $ctrl.images\"><img ng-src=\"{{img.url}}\" ng-click=\"$ctrl.pick(img.url)\" class=\"w-100 m-0\" /></div></div></div><div class=\"modal-footer bg-info\"><button class=\"btn btn-warning\" ng-disabled=\"$ctrl.isSubmiting\" type=\"button\" ng-click=\"$ctrl.cancel()\">Cancel</button></div>");
         });
+
 }));

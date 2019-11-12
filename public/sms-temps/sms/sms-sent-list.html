@@ -3,7 +3,7 @@
         <h3 class="text-center m-3">Recent SMS</h3>
         <script type="text/ng-template" id="sms-list">
             <div class="list-group">
-				<div class="list-group-item bg-primary mb-1 shadow-sm" ng-repeat="msg in msgs" ng-include="listTemp(msg,$index)"></div>
+				<div class="list-group-item mb-1 shadow-sm" ng-repeat="msg in msgs" ng-include="listTemp(msg,$index)"></div>
 			</div>
 		</script>
         <script type="text/ng-template" id="no-pay">

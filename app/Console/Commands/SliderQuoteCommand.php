@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Events\SliderQuote;
+use App\OnlineClient;
 use App\Quote;
 use Illuminate\Console\Command;
 
@@ -39,6 +40,10 @@ class SliderQuoteCommand extends Command
      */
     public function handle()
     {
+        $stats = OnlineClient::all()->count();
+        if ($stats === 0) {
+            return;
+        }
         $quote = Quote::inRandomOrder()->get()->first();
         if (!is_null($quote)) {
             broadcast(new SliderQuote($quote));

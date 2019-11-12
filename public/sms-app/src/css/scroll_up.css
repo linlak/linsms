@@ -53,6 +53,30 @@
     display: none;
 }
 
+.lin-markdown h1 {
+    text-align: center;
+}
+
+.lin-markdown img {
+    max-width: 60%;
+    height: auto;
+    max-height: 400px;
+}
+
+.lin-markdown hr {
+
+    background: rgb(194, 235, 248);
+}
+
+.lin-markdown pre {
+    background: rgba(0, 0, 0, .9);
+    color: whitesmoke;
+    padding-left: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-left: 2px solid gray;
+}
+
 #Errsdiv {
     margin: 0 auto;
     left: 20%;
@@ -77,10 +101,28 @@
     border-radius: 30px;
 }
 
+#notifications {
+    z-index: 1;
+    position: absolute;
+    opacity: .9;
+    right: -30%;
+    width: 30%;
+    min-height: 250px;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+}
+
+#notfyToggler:checked~#notifications {
+    right: 0;
+}
+
 .share-me {
     cursor: pointer;
 }
 
+#p-reload,
 #p-loading {
     z-index: 1000;
     position: fixed;
@@ -142,4 +184,84 @@
 #loading-bar-spinner .spinner-icon {
     border-top-color: rgb(221, 34, 75);
     border-left-color: rgb(221, 34, 75);
+}
+
+@keyframes marquee {
+    0% {
+        text-indent: 100%
+    }
+
+    100% {
+        text-indent: -100%
+    }
+}
+
+@-webkit-keyframes marquee {
+    0% {
+        text-indent: 100%
+    }
+
+    100% {
+        text-indent: 0%
+    }
+}
+
+.marquee {
+    overflow: hidden;
+    white-space: nowrap;
+    animation: marquee 17s linear infinite;
+    -webkit-animation: marquee 17s linear infinite;
+}
+
+.marquee:hover {
+    -webkit-animation-play-state: paused;
+    animation-play-state: paused;
+}
+
+#on-stats {
+    width: 70px;
+    position: fixed;
+    right: auto;
+    left: 0;
+    top: auto;
+    bottom: 0;
+    z-index: 10000;
+}
+
+#notofybtn {
+
+    cursor: pointer;
+}
+
+.markdown-toolbar .btn {
+    cursor: pointer;
+}
+
+.markdown-toolbar .btn:hover {
+    background: oldlace;
+}
+
+#notofybtn:hover {
+    padding-bottom: 5px;
+    color: bisque;
+    border-bottom: 2px solid orange;
+}
+
+#notfyToggler {
+    display: none;
+}
+
+[ng-quill-editor] {
+    display: block;
+}
+
+@media screen and (max-width:650px) {
+    #notifications {
+        right: -80%;
+        width: 80%;
+    }
+
+    #notfyToggler:checked~#notifications {
+        right: 0;
+    }
 }

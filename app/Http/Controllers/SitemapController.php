@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\CrawlablePage;
-use Illuminate\Http\Request;
 use App\Services\Traits\MyVariables;
+use Illuminate\Http\Request;
 
 class SitemapController extends Controller
 {
@@ -12,16 +12,18 @@ class SitemapController extends Controller
     //
     public function store(Request $request)
     {
-        if (!is_null($request->input('page_url'))) {
-            $c_page = CrawlablePage::where('page_url', $request->input('page_url'))->get()->first();
+        if (!is_null($request->json('page_url'))) {
+            $c_page = CrawlablePage::where('page_url', $request->json('page_url'))->get()->first();
             if (!\is_null($c_page)) {
                 $c_page->visists += 1;
-                $c_page->page_freq = $request->input('page_freq');
-                $c_page->crawler_priority = $request->input('crawler_priority');
             } else {
-                $c_page = new CrawlablePage($request->only('page_url', 'crawler_priority', 'page_freq'));
+                $c_page = new CrawlablePage();
+                $c_page->page_url = $request->json('page_url');
             }
+            $c_page->page_freq = $request->json('page_freq');
+            $c_page->crawler_priority = $request->json('crawler_priority');
             $c_page->save();
+            $this->_setResults('status', 'done');
         }
         return $this->_showResult();
     }

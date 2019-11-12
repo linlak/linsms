@@ -2,6 +2,7 @@ define(["app"], app => {
     "use strict";
     let tempsMain = "/sms-temps/main/";
     let tempsForms = "/sms-temps/forms/";
+    let tempsAdmin = "/sms-temps/admin/";
     app.config([
         "$stateProvider",
         "$urlRouterProvider",
@@ -25,56 +26,7 @@ define(["app"], app => {
                     views: {
                         "@": {
                             templateUrl: tempsMain + "main.html",
-                            controller: function (
-                                $scope,
-                                navToggleService,
-                                user,
-                                authService,
-                                $log,
-                                popService,
-                                $state
-                            ) {
-                                $scope.isUser = false;
-                                $scope.isAdmin = false;
-                                $scope.isSuper = false;
-                                $scope.me;
-                                $scope.isNavCollapsed = false;
-                                $scope.showSide = false;
-
-                                function checkUser() {
-                                    $scope.isUser = user.isLoggedIn();
-                                    $scope.isAdmin = user.isAdmin();
-                                    $scope.isSuper = user.isSuper();
-                                    $scope.me = user;
-                                }
-                                $scope.toggleCollapse = function () {
-                                    navToggleService.toggleVisible("myNav");
-                                };
-                                $scope.toggleSide = function () {
-                                    navToggleService.toggleVisible("sidenav");
-                                };
-                                $scope.logout = function () {
-                                    navToggleService.unsetVisible();
-                                    authService.logout();
-                                };
-                                $scope.isActive = (glob) => {
-                                    return navToggleService.isActive(glob);
-                                };
-                                $scope.openAdmin = function () {
-                                    popService.rightsForm();
-                                };
-
-                                navToggleService.setHook(function () {
-                                    $scope.isNavCollapsed = navToggleService.isVisibleNav(
-                                        "myNav"
-                                    );
-                                    $scope.showSide = navToggleService.isVisibleNav(
-                                        "sidenav"
-                                    );
-                                });
-                                user.setHook("rootCtr", checkUser);
-                                checkUser();
-                            }
+                            controller: 'rootCtrl'
                         },
                         "nav@root": {
                             templateUrl: tempsMain + "nav.html"
@@ -85,6 +37,11 @@ define(["app"], app => {
                         "alertcont@root": {
                             templateUrl: tempsMain + "errcontainer.html",
                             controller: "alertCtrl"
+                        }
+                    },
+                    resolve: {
+                        loadit: lazyLoader => {
+                            return lazyLoader.loadModule(['rootCtrl']);
                         }
                     }
                 })
@@ -101,8 +58,6 @@ define(["app"], app => {
                     },
                     title: "Home",
                     craw_me: true,
-                    craw_priority: 0.9,
-                    craw_ref: 'weekly',
                 })
                 .state("about", {
                     parent: "root",
@@ -135,8 +90,6 @@ define(["app"], app => {
                     title: "About Us",
                     description: "know more about linsms, and all the services offered at linsms such as bulksms, money transfer, and our feature rich interfance and integration api, and sms gateway",
                     craw_me: true,
-                    craw_priority: 0.9,
-                    craw_ref: 'weekly',
                 })
                 .state("contact", {
                     parent: "root",
@@ -151,8 +104,6 @@ define(["app"], app => {
                     },
                     title: "Contact Us",
                     craw_me: true,
-                    craw_priority: 0.9,
-                    craw_ref: 'weekly',
                 })
                 .state("terms", {
                     parent: "root",
@@ -165,8 +116,6 @@ define(["app"], app => {
                     title: "Terms and Conditions",
                     description: "linsms aims to provide you with the best bulksms services while consindering your safety online, we setup terms and conditions that govern your usage at linsms",
                     craw_me: true,
-                    craw_priority: 0.9,
-                    craw_ref: 'weekly',
                 })
                 .state("privacy", {
                     parent: "root",
@@ -179,8 +128,6 @@ define(["app"], app => {
                     title: "Privacy Policy",
                     description: "linsms a bulksms website in uganda consinder your security a priority, linsms privacy will help you know what tools and security features we use to protect your data while at linsms",
                     craw_me: true,
-                    craw_priority: 0.9,
-                    craw_ref: 'weekly',
                 })
                 .state('my_sms', {
                     parent: "root",
@@ -255,8 +202,6 @@ define(["app"], app => {
                     redTo: "buy",
                     title: "Pricing",
                     craw_me: true,
-                    craw_priority: 0.9,
-                    craw_ref: 'weekly',
                     description: "linsms uganda offers competetive prices that are managable by users with all pocket sizes, our prices go as low as 25/= (ug shillings)"
                 })
                 .state("sent", {
@@ -355,8 +300,6 @@ define(["app"], app => {
                         }
                     },
                     craw_me: true,
-                    craw_priority: 0.9,
-                    craw_ref: 'weekly',
                     resolve: {
                         contacts: function (httpService) {
                             return httpService.getData(
@@ -470,8 +413,6 @@ define(["app"], app => {
                     parent: "root",
                     url: "login.html",
                     craw_me: true,
-                    craw_priority: 0.9,
-                    craw_ref: 'weekly',
                     views: {
                         "body@root": {
                             templateUrl: tempsForms + "login.html",
@@ -492,8 +433,6 @@ define(["app"], app => {
                     parent: "root",
                     url: "register.html",
                     craw_me: true,
-                    craw_priority: 0.9,
-                    craw_ref: 'weekly',
                     views: {
                         "body@root": {
                             templateUrl: tempsForms + "register.html",
@@ -514,8 +453,6 @@ define(["app"], app => {
                     parent: "root",
                     url: "recover-password.html",
                     craw_me: true,
-                    craw_priority: 0.9,
-                    craw_ref: 'weekly',
                     views: {
                         "body@root": {
                             templateUrl: tempsForms + "pass-rec.html",
@@ -531,6 +468,17 @@ define(["app"], app => {
                     isAuth: true,
                     redTo: "send",
                     description: "at linsms recovering your user password is breaze, easily recover your password in seconds"
+                })
+                .state('services', {
+                    parent: 'root',
+                    url: 'services.html',
+                    title: 'Our Services',
+                    craw_me: true,
+                    views: {
+                        'body@root': {
+                            templateUrl: '/sms-temps/page/services.html'
+                        }
+                    }
                 })
                 .state("acountverification", {
                     parent: 'root',
@@ -655,29 +603,18 @@ define(["app"], app => {
                     views: {
                         "body@root": {
                             templateUrl: "/sms-temps/admin/main.html",
-                            controller: function ($scope, navToggleService) {
-                                $scope.showAdminSide = false;
-                                $scope.toggleadminSide = () => {
-                                    navToggleService.toggleVisible("adminnav");
-                                };
-                                navToggleService.setNamedHook(
-                                    "admin",
-                                    function () {
-                                        $scope.showAdminSide = navToggleService.isVisibleNav(
-                                            "adminnav"
-                                        );
-                                    }
-                                );
-                                $scope.$on("$destroy", () => {
-                                    navToggleService.unsetHook("admin");
-                                });
-                            }
+                            controller: 'adminCtrl'
                         },
                         "adminhead@admin": {
                             templateUrl: "/sms-temps/admin/admin-head.html"
                         },
                         "adminnav@admin": {
                             templateUrl: "/sms-temps/admin/nav.html"
+                        }
+                    },
+                    resolve: {
+                        loadit: (lazyLoader) => {
+                            return lazyLoader.loadModule(['adminCtrl']);
                         }
                     }
                 })
@@ -782,7 +719,6 @@ define(["app"], app => {
                     url: "/sms",
                     abstract: true
                 })
-
                 .state("a_sent.all", {
                     url: "",
                     auth: true,
@@ -860,6 +796,152 @@ define(["app"], app => {
                         }
                     }
                 })
+                //news
+                .state("a_news", {
+                    url: "/news",
+                    parent: "admin",
+                    abstract: true
+                })
+                .state("a_news.all", {
+                    url: "",
+                    title: 'News',
+                    auth: true,
+                    admin: true,
+                    views: {
+                        'admin@admin': {
+                            templateUrl: tempsAdmin + 'news/'
+                        }
+                    },
+                })
+                .state("a_news.add", {
+                    url: "/add",
+                    title: 'Add News',
+                    auth: true,
+                    admin: true,
+                    views: {
+                        'admin@admin': {
+                            templateUrl: tempsAdmin + 'news/add-news.html',
+                            controller: 'newsCtrl'
+                        }
+                    },
+                    resolve: {
+                        loadit: (lazyLoader) => {
+                            return lazyLoader.loadModule(['newsCtrl']);
+                        }
+                    }
+                })
+                .state("a_news.detail", {
+                    url: "/{id}",
+                    title: 'News',
+                    auth: true,
+                    admin: true,
+                })
+                .state("a_news.edit", {
+                    url: "/edit/{id}",
+                    title: 'News',
+                    auth: true,
+                    admin: true,
+                })
+                .state("news", {
+                    url: "news",
+                    parent: "root",
+                    abstract: true
+                })
+                .state("news.all", {
+                    url: "",
+                    title: 'News',
+                    craw_me: true,
+                })
+                //blog
+                .state("a_blog", {
+                    url: "/blog",
+                    parent: "admin",
+                    abstract: true
+                })
+                .state("a_blog.all", {
+                    url: "",
+                    title: 'Blog',
+                    auth: true,
+                    admin: true,
+                })
+                .state("a_blog.cats", {
+                    url: "-categories",
+                    title: 'Blog Categories',
+                    auth: true,
+                    admin: true,
+                })
+                .state("blog", {
+                    url: "blog",
+                    parent: "root",
+                    abstract: true
+                })
+                .state("blog.all", {
+                    url: "",
+                    title: 'Blog',
+                    craw_me: true,
+                })
+                .state("blog.cats", {
+                    url: "{cat_link}",
+                    title: 'Blog',
+                    craw_me: true,
+                })
+                .state("blog.single", {
+                    url: "/{id}/{slug}",
+                    title: 'Blog',
+                    craw_me: true,
+                })
+                .state("a_pusher", {
+                    url: "/pusher-apps",
+                    parent: "admin",
+                    abstract: true
+                })
+                .state("a_pusher.all", {
+                    url: "",
+                    title: 'Pusher Apps',
+                    auth: true,
+                    admin: true,
+                })
+                .state("a_pusher.manage", {
+                    url: "/{app_id}",
+                    title: 'Pusher Apps',
+                    abstract: true
+                })
+                .state("a_pusher.manage.home", {
+                    url: "",
+                    title: 'Pusher Apps',
+                    auth: true,
+                    admin: true,
+                })
+                .state("a_pusher.manage.edit", {
+                    url: "/edit",
+                    title: 'Pusher Apps',
+                    auth: true,
+                    admin: true,
+                })
+                .state("a_pusher.manage.stats", {
+                    url: "/statistics",
+                    title: 'Pusher Apps',
+                    auth: true,
+                    admin: true,
+                })
+                //tuts
+                .state("a_tuts", {
+                    url: "/tutorials",
+                    parent: "admin",
+                    abstract: true
+                })
+                .state("a_tuts.all", {
+                    url: "",
+                    title: 'Tutorials',
+                    auth: true,
+                    admin: true,
+                })
+                .state("a_tuts.edit", {
+                    url: "/{id}",
+                    title: 'Tutorials',
+                    auth: true,
+                    admin: true,
+                })
                 //developer
                 .state("developer", {
                     url: "developer",
@@ -888,8 +970,6 @@ define(["app"], app => {
                     description: "at linsms we help developers to easily integrate their systems with our open api, our api gives you access to our sms getway, online payment system, funds tranfers and sandbox testing",
                     url: '',
                     craw_me: true,
-                    craw_priority: 0.9,
-                    craw_ref: 'weekly',
                     views: {
                         'body@developer': {
                             templateUrl: '/sms-temps/developer/home.html',
@@ -1151,12 +1231,12 @@ define(["app"], app => {
                     url: '',
                     title: 'Docs',
                     craw_me: true,
-                    craw_priority: 0.9,
-                    craw_ref: 'weekly',
                     views: {
                         'body@developer': {
-                            templateUrl: '/sms-temps/developer/tutorials/',
+                            // templateUrl: '/sms-temps/developer/tutorials/',
+                            templateUrl: '/sms-temps/developer/tutorials/markdown.html',
                             controller: function ($scope) {
+                                $scope.mdText = "";
                                 $scope.secret = "jkhjhjyrterdfghfghjkhkkjkjijkjkjkjkljklkjljkjkljl";
                                 $scope.client_id = "ghjkkhuyttdrefgyghhguuhujhj";
                                 $scope.show_client = false;
@@ -1176,8 +1256,6 @@ define(["app"], app => {
                     url: '/{category}',
                     title: 'Docs',
                     craw_me: true,
-                    craw_priority: 0.9,
-                    craw_ref: 'weekly',
                     views: {
                         'body@developer': {
                             templateUrl: '/sms-temps/developer/tutorials/'
@@ -1188,11 +1266,10 @@ define(["app"], app => {
                     url: '/{category}/{tut}',
                     title: 'Docs',
                     craw_me: true,
-                    craw_priority: 0.9,
-                    craw_ref: 'weekly',
                     views: {
                         'body@developer': {
                             templateUrl: '/sms-temps/developer/tutorials/'
+
                         }
                     },
                 })

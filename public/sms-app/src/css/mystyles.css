@@ -48,9 +48,7 @@ html {
     position: relative;
 }
 
-.table {
-    color: #e5e5e5;
-}
+
 
 a {
     color: #32c7c7;
@@ -144,7 +142,7 @@ a {
     width: 100%;
     height: auto;
     overflow: hidden;
-    border: none;
+    /* border: none; */
     line-height: 2em;
     -webkit-transition: height 5s ease-in-out;
     -moz-transition: height 5s ease-in-out;

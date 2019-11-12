@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-12 bg-success ">
+    <div class="col-12 bg-success text-white">
         <span class="position-absolute small admn mt-2" ng-click="openAdmin()" ng-if="isUser&&!isAdmin">
             <span class="fa fa-lock"></span>
         </span>
@@ -7,13 +7,14 @@
             <p class="text-capitalize">
                 Hi {{ me.getName() }}<br />
                 Balance: {{ me.hasSMS() ? me.getSMS() + " sms" : "N/A" }} <br>
-                <span>
+                <span id="notofybtn" class="mt-1" ng-click="toggleNotify()">
                     <span class="fa fa-bell"></span>
                     <span class="badge" ng-class="me.unread_notifications()?'badge-danger':'badge-dark'">
                         {{me.unread_notifications()}}
                     </span>
                 </span>
             </p>
+
         </div>
         <nav class="navbar navbar-expand-sm navbar-dark bg-success mx-0">
             <a ui-sref="home" class="navbar-brand">
@@ -45,39 +46,54 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item dropdown" ng-class="{'active':isActive('my_pay') }" ng-show="isUser">
+
+                </ul>
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown" ng-class="{'active':isActive('developer') }">
                         <a href="" data-toggle="dropdown" class="nav-link" role="button" aria-expanded="false"
-                            aria-haspopup="true" class="dropdown-toggle">Payments <span
+                            aria-haspopup="true" class="dropdown-toggle">Events <span
                                 class="fa fa-caret-down"></span></a>
                         <ul class="dropdown-menu  bg-secondary">
-                            <li ng-show="isUser" ui-sref-active="active" class="nav-item">
-                                <a class="nav-link" ui-sref="buy">Initiate</a>
+                            <li ui-sref-active="active" class="nav-item" ng-if="isAdmin">
+                                <a class="nav-link" ui-sref="a_tuts.all">Manage</a>
                             </li>
-                            <li ng-show="isUser" ui-sref-active="active" class="nav-item">
-                                <a class="nav-link" ui-sref="pay">My Payments</a>
-                            </li>
-                            <li ng-show="isUser" ui-sref-active="active" class="nav-item">
-                                <a class="nav-link" ui-sref="me2u">Me2U</a>
+                            <li ui-sref-active="active" class="nav-item">
+                                <a class="nav-link" ui-sref="tutorials.home">Upcoming</a>
                             </li>
                         </ul>
                     </li>
-                    <li ng-show="isUser" ng-class="{'active':isActive('phonebook') }" class="nav-item">
-                        <a class="nav-link" ui-sref="phonebook.all">Phone Book</a>
+                    <li class="nav-item dropdown" ng-class="{'active':isActive('news') }">
+                        <a href="" data-toggle="dropdown" class="nav-link" role="button" aria-expanded="false"
+                            aria-haspopup="true" class="dropdown-toggle">Jobs <span class="fa fa-caret-down"></span></a>
+                        <ul class="dropdown-menu  bg-secondary">
+                            <li ui-sref-active="active" class="nav-item" ng-if="isAdmin">
+                                <a class="nav-link" ui-sref="a_news.all">Manage</a>
+                            </li>
+                            <li ui-sref-active="active" class="nav-item">
+                                <a class="nav-link" ui-sref="news.all">Recent</a>
+                            </li>
+                        </ul>
                     </li>
-                    <li ui-sref-active="active" class="nav-item">
-                        <a class="nav-link" ui-sref="about">About Us</a>
-                    </li>
-                    <li ng-show="!isUser" ui-sref-active="active" class="nav-item">
-                        <a class="nav-link" ui-sref="prices">Pricing</a>
-                    </li>
-                    <li ng-show="!isUser" ui-sref-active="active" class="nav-item">
-                        <a class="nav-link" ui-sref="mtd">Payment Methods</a>
+                    <li class="nav-item dropdown" ng-class="{'active':isActive('news') }">
+                        <a href="" data-toggle="dropdown" class="nav-link" role="button" aria-expanded="false"
+                            aria-haspopup="true" class="dropdown-toggle">News <span class="fa fa-caret-down"></span></a>
+                        <ul class="dropdown-menu  bg-secondary">
+                            <li ui-sref-active="active" class="nav-item" ng-if="isAdmin">
+                                <a class="nav-link" ui-sref="a_news.all">Manage</a>
+                            </li>
+                            <li ui-sref-active="active" class="nav-item">
+                                <a class="nav-link" ui-sref="news.all">Recent</a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="nav-item dropdown" ng-class="{'active':isActive('developer') }">
                         <a href="" data-toggle="dropdown" class="nav-link" role="button" aria-expanded="false"
                             aria-haspopup="true" class="dropdown-toggle">Developer <span
                                 class="fa fa-caret-down"></span></a>
                         <ul class="dropdown-menu  bg-secondary">
+                            <li ui-sref-active="active" class="nav-item" ng-if="isAdmin">
+                                <a class="nav-link" ui-sref="a_tuts.all">Manage</a>
+                            </li>
                             <li ui-sref-active="active" class="nav-item">
                                 <a class="nav-link" ui-sref="tutorials.home">Tutorials</a>
                             </li>
@@ -86,8 +102,20 @@
                             </li>
                         </ul>
                     </li>
-                </ul>
 
+                    <li class="nav-item dropdown" ng-class="{'active':isActive('blog') }">
+                        <a href="" data-toggle="dropdown" class="nav-link" role="button" aria-expanded="false"
+                            aria-haspopup="true" class="dropdown-toggle">Blog <span class="fa fa-caret-down"></span></a>
+                        <ul class="dropdown-menu  bg-secondary">
+                            <li ui-sref-active="active" class="nav-item" ng-if="isAdmin">
+                                <a class="nav-link" ui-sref="a_blog.all">Manage</a>
+                            </li>
+                            <li ui-sref-active="active" class="nav-item">
+                                <a class="nav-link" ui-sref="blog.all">Recent</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
                 <ul class="navbar-nav navbar-right">
                     <li class="nav-item dropdown" ng-class="{'active':isActive('account') }" ng-show="isUser">
                         <a href="" data-toggle="dropdown" class="nav-link" role="button" aria-expanded="false"
@@ -97,7 +125,19 @@
                             <li ui-sref-active="active" ng-show="isUser" class="nav-item">
                                 <a class="nav-link" ui-sref="account.profile">My Account</a>
                             </li>
-                            <li ui-sref-active="active" ng-show="isAdmin" class="nav-item">
+                            <li ng-show="isUser" ui-sref-active="active" class="nav-item">
+                                <a class="nav-link" ui-sref="buy">Initiate Payment</a>
+                            </li>
+                            <li ng-show="isUser" ui-sref-active="active" class="nav-item">
+                                <a class="nav-link" ui-sref="pay">My Payments</a>
+                            </li>
+                            <li ng-show="isUser" ui-sref-active="active" class="nav-item">
+                                <a class="nav-link" ui-sref="me2u">Me2U</a>
+                            </li>
+                            <li ng-show="isUser" ng-class="{'active':isActive('phonebook') }" class="nav-item">
+                                <a class="nav-link" ui-sref="phonebook.all">Phone Book</a>
+                            </li>
+                            <li ng-class="{'active':isActive('admin') }" ng-show="isAdmin" class="nav-item">
                                 <a class="nav-link" ui-sref="admin.home">Manage</a>
                             </li>
                         </ul>
@@ -115,5 +155,9 @@
                 </ul>
             </div>
         </nav>
+        <input type="checkbox" name="notfyToggler" ng-model="notfyToggler" id="notfyToggler">
+        <div id="notifications" class="bg-success">
+            {{notifications|json}}
+        </div>
     </div>
 </div>

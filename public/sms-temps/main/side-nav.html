@@ -1,15 +1,29 @@
 <div class=" navbar-dark pl-2">
     <ul class="navbar-nav ">
         <li class="nav-item" ui-sref-active="active"><a ui-sref="home" class="nav-link">Home</a></li>
+
+        <li class="nav-item" ui-sref-active="active"><a ui-sref="events.all" class="nav-link">Events</a></li>
+        <li class="nav-item" ui-sref-active="active"><a ui-sref="news.all" class="nav-link">News</a></li>
+        <li class="nav-item" ui-sref-active="active"><a ui-sref="blog.all" class="nav-link"
+                ui-sref-active="active">Blog</a></li>
+        <li class="nav-item" ui-sref-active="active"><a ui-sref="inspire.home" class="nav-link">Inspiration</a></li>
+
         <li class="nav-item" ui-sref-active="active"><a ui-sref="about" class="nav-link">About Us</a></li>
+        <li class="nav-item" ui-sref-active="active"><a ui-sref="services" class="nav-link">Our Services</a></li>
         <li class="nav-item" ui-sref-active="active"><a ui-sref="prices" class="nav-link" ng-show="!isUser"
                 ui-sref-active="active">Pricing</a></li>
         <li class="nav-item" ui-sref-active="active"><a ui-sref="mtd" class="nav-link">Payment Methods</a></li>
-        <li class="nav-item" ui-sref-active="active"><a ui-sref="contact" class="nav-link">Contact</a></li>
+        <li class="nav-item" ui-sref-active="active"><a ui-sref="contact" class="nav-link">Contact Us</a></li>
         <li class="nav-item" ui-sref-active="active"><a ui-sref="privacy" class="nav-link">Privacy</a></li>
         <li class="nav-item" ui-sref-active="active"><a ui-sref="terms" class="nav-link">Terms and Conditions</a></li>
-        <li class="nav-item" ng-class="{'active':isActive('my_pay') }"><a ui-sref="dev" class="nav-link">Developer</a></li>
+        <li class="nav-item" ng-class="{'active':isActive('my_pay') }"><a ui-sref="dev" class="nav-link">Developer</a>
+        </li>
         <li class="nav-item" ui-sref-active="active"><a href="" class="nav-link" ng-show="isUser"
                 ng-click="logout()">Logout</a></li>
+        <li class="nav-item" ui-sref-active="active"><a ui-sref="login" class="nav-link" ng-show="!isUser">Login</a>
+        </li>
+        <li class="nav-item" ui-sref-active="active"><a ui-sref="register" class="nav-link"
+                ng-show="!isUser">Register</a>
+        </li>
     </ul>
 </div>

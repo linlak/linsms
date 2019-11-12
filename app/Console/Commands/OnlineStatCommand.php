@@ -40,9 +40,7 @@ class OnlineStatCommand extends Command
     {
         $stats = OnlineClient::where('last_seen', '<=', \now()->subMinute())->get();
         if ($stats->count() > 0) {
-            // $this->info('deleting ' . $stats->count() . ' clients');
             foreach ($stats as $stat) {
-                // $this->info('deleting ' . $stat->client_ip);
                 $stat->delete();
             }
         }
