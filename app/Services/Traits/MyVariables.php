@@ -245,7 +245,14 @@ trait MyVariables
      */
     protected function no_pay()
     {
-        $this->_msg = "Payment not found";
+        $this->no_data("Payment not found");
+    }
+    /**
+     * @return void
+     */
+    protected function no_data($msg)
+    {
+        $this->_msg = $msg;
         $this->_setResults('no_data', true);
     }
     /**

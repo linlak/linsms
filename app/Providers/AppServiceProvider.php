@@ -4,9 +4,13 @@ namespace App\Providers;
 
 use App\Observers\OnlineClientObserver;
 use App\Observers\SmsPaymentObserver;
+use App\Observers\WebAppSmsObserver;
+use App\Observers\WebAppStatsObserver;
 use App\OnlineClient;
 use App\Services\AppGuard;
 use App\SmsPayment;
+use App\WebApi\WebAppSms;
+use App\WebApi\WebAppStat;
 use Illuminate\Queue\Events\JobProcessed;
 use Illuminate\Queue\Events\JobProcessing;
 use Illuminate\Support\Facades\Auth;
@@ -58,5 +62,7 @@ class AppServiceProvider extends ServiceProvider
     {
         SmsPayment::observe(SmsPaymentObserver::class);
         OnlineClient::observe(OnlineClientObserver::class);
+        WebAppSms::observe(WebAppSmsObserver::class);
+        WebAppStat::observe(WebAppStatsObserver::class);
     }
 }

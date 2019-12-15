@@ -8,10 +8,13 @@ use App\Me2U;
 use App\Services\Traits\Admin\Quotes\QuotesTrait;
 use App\Services\Traits\Admin\Sms\ActivatesPayments;
 use App\Services\Traits\Admin\Sms\ManagesSms;
+use App\Services\Traits\Admin\Tutorials\TutorialsTrait;
 use App\Services\Traits\Admin\User\ManagesUsers;
 use App\Services\Traits\MyVariables;
 use App\Sms;
+use App\Tutorial;
 use App\User;
+use DOMDocument;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Validator;
@@ -19,16 +22,60 @@ use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
-    use MyVariables, ActivatesPayments, ManagesUsers, ManagesSms, QuotesTrait;
+    use MyVariables, ActivatesPayments, ManagesUsers, ManagesSms, QuotesTrait, TutorialsTrait;
 
     public function __construct()
     {
         $this->middleware(['auth', 'admin']);
         $this->userLocation();
     }
+    public function editTutorialBody(Request $request)
+    {
+        $this->_validator = Validator::make($request->all(), [
+            'body' => 'nullable'
+        ]);
+        if ($this->_validator->fails()) {
+            return $this->getErrs();
+        }
+        try {
+            /**
+             * @var \App\Tutorial
+             */
+            $tutorial = Tutorial::with(['admin', 'comments', 'likes'])->withCount(['comments', 'likes'])->findOrFail($request->input('id'));
+            $this->_setResults('bb', $request->body);
+            $tutubody = $request->input('body');
+            $dom = new DOMDocument("1.0", "UTF-8");
+            $dom->loadHTML($tutubody);
+            $tutubody = $dom->saveHTML();
 
-
-
+            $tutorial->body = $tutubody;
+            $tutorial->save();
+            // $tutorial->refresh()->with(['admin', 'comments', 'likes'])->withCount(['comments', 'likes']);
+            $this->_setResults('tutorial', $this->parseTutDetails($tutorial));
+            $this->_success_flag = 1;
+            $this->_type = 'success';
+            $this->_msg = "Tutorial updated successfully :)";
+        } catch (\Throwable $th) {
+            $e = $th->getMessage();
+            $this->no_data('Tutorial not found!!');
+        }
+    }
+    public function createEditTutorial(Request $request)
+    {
+        $this->_enVal();
+        switch ($request->input('action', 'create')) {
+            case 'create':
+                $this->createTutorial($request);
+                break;
+            case 'edit-body':
+                $this->editTutorialBody($request);
+                break;
+            default:
+                $this->_msg = 'Action not implemented';
+                break;
+        }
+        return $this->_showResult();
+    }
     public function manageUser(Request $request, $id)
     {
         try {

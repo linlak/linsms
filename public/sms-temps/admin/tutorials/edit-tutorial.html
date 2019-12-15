@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="col-12">
+        <p><b>Title: </b>{{tutorial.title}}</p>
+        <p><b>Created By:</b> {{tutorial.author.name}}</p>
+        <p><small>
+                <b>Created:</b> {{tutorial.created_at}}&nbsp;
+                <b>Modified:</b> {{tutorial.updated_at}}&nbsp;
+                <b>Comments:</b> {{tutorial.comments_count}}&nbsp;
+                <b>Liked:</b> {{tutorial.likes_count}}&nbsp;
+            </small> </p>
+        <div class="form my-3">
+            <div class="form-group">
+                <div>
+                    <ng-quill-editor ng-model="tutorial.body" class="mt-2"></ng-quill-editor>
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+                    <button class="btn btn-primary float-right" ng-click="editTutorial()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

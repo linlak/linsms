@@ -7,6 +7,7 @@ use App\WebApi\WebApp;
 
 trait AuthorizesApp
 {
+    use LogsApp;
     // use KeyTrait;
     /**
      * @var String
@@ -72,6 +73,8 @@ trait AuthorizesApp
                     if ($webapp->secret === $this->secret) {
                         $this->webApp = $webapp;
                         $this->setUser($this->webApp->user);
+                    } else {
+                        $this->app_log($webapp, "Authentication failed", "error");
                     }
                 }
             }

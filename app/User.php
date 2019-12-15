@@ -81,4 +81,40 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(UserDomain::class);
     }
+
+    public function delete()
+    {
+        $this->loadMissing(['domains', 'v_codes', 'attachments', 'clients', 'admin', 'messages', 'avatar', 'phonebooks']);
+        $this->deleteDomains($this->domains)
+            ->deletePhoneBooks($this->phonebooks)
+            ->deleteVCodes($this->v_codes);
+        parent::delete();
+    }
+    private function deleteDomains(array $domains)
+    {
+        if (count($domains) > 0) {
+            foreach ($domains as $dmn) {
+                $dmn->delete();
+            }
+        }
+        return $this;
+    }
+    private function deletePhoneBooks(array $phoneBooks)
+    {
+        if (count($phoneBooks) > 0) {
+            foreach ($phoneBooks as $phonebook) {
+                $phonebook->delete();
+            }
+        }
+        return $this;
+    }
+    private function deleteVCodes(array $vCodes)
+    {
+        if (count($vCodes) > 0) {
+            foreach ($vCodes as $vCode) {
+                $vCode->delete();
+            }
+        }
+        return $this;
+    }
 }

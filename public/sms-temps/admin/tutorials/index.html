@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-12 text-center">
+                <a ui-sref="a_tuts.add" class="btn btn-success">Add Topic</a>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="list-group">
+                    <div class="list-group-item" ng-repeat="tutorial in tutorials" track-by="tutorial.id">
+                        <h5><a ui-sref="a_tuts.edit({id:tutorial.id})" class="text-black-50">{{tutorial.title}}</a>
+                        </h5>
+                        <p>Created By: &nbsp;{{tutorial.author.name}}</p>
+                        <p>
+                            <small>
+                                Created: {{tutorial.created_at}}&nbsp;
+                                Modified: {{tutorial.updated_at}}&nbsp;
+                                <span class="d-block d-sm-none clearfix"></span>
+                                Likes: {{tutorial.likes}}&nbsp;
+                                Comments: {{tutorial.comments}}&nbsp;
+                            </small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

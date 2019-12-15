@@ -47,6 +47,7 @@
 
 		<link rel="stylesheet" type="text/css" href="/sms-app/libs/bootstrap-4.3.1/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="/sms-app/src/css/animate.min.css">
+		<link rel="stylesheet" type="text/css" href="/sms-app/libs/fontawesome-free-5.6.1-web/css/fontawesome.min.css">
 		<link rel="stylesheet" type="text/css" href="/sms-app/libs/fontawesome-free-5.6.1-web/css/all.min.css">
 		<link rel="stylesheet" type="text/css" href="/sms-app/libs/angular-loading-bar/build/loading-bar.min.css">
 		<link rel="stylesheet" type="text/css" href="/sms-app/libs/angular-toaster/toaster.min.css">
@@ -68,12 +69,13 @@
 						<span class="fa fa-spinner fa-spin fa-2x"></span><br>
 						Please wait...
 					</div>
-					<div id="p-reload"  style="{display: none;}" class="text-white bg-secondary shadow-sm align-items-center">
-					<span>
-					Error loading page!!</span><br>
-					<button class="btn btn-primary" onclick="refPage()">
-					<span class="fa fa-reload"></span> Refresh
-					</button>
+					<div id="p-reload" style="{display: none;}"
+						class="text-white bg-secondary shadow-sm align-items-center">
+						<span>
+							Error loading page!!</span><br>
+						<button class="btn btn-primary" onclick="refPage()">
+							<span class="fa fa-reload"></span> Refresh
+						</button>
 					</div>
 				</div>
 			</div>
@@ -99,7 +101,7 @@
 		showLoading();
 		</script>
 		<!-- <script type="text/javascript" src="/worker-register.js"></script> -->
-		<script type="text/javascript" data-main="/sms-app/main" src="/sms-app/libs/js/require.js"></script>
+		<script type="text/javascript" data-main="/sms-app/main_v0_3" src="/sms-app/libs/js/require.js"></script>
 	</body>
 
 </html>

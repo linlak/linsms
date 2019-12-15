@@ -175,10 +175,9 @@ return [
         App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Linlak\Jwt\Providers\JwtServiceProvider::class,
+        // Linlak\Jwt\Providers\JwtServiceProvider::class,
         // Linlak\Jwt\Providers\CustomSearchProvider::class,
         Nutsweb\LaravelPrerender\LaravelPrerenderServiceProvider::class,
-        // Linlak\LinSocial\Providers\LinSocialProvider::class,
 
     ],
 
@@ -230,8 +229,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'LinJwt' => Linlak\Jwt\Facades\LinJwt::class,
-        // 'LinSocial' => Linlak\LinSocial\Facades\LinSocial::class,
+        // 'LinJwt' => Linlak\Jwt\Facades\LinJwt::class,
     ],
 
 ];

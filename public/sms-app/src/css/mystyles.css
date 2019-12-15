@@ -113,6 +113,10 @@ a {
 
 }
 
+.hovable:hover {
+    cursor: pointer;
+}
+
 #navtogglerlabel .fa,
 #adminnavtogglerlabel .fa {
     margin: 0;

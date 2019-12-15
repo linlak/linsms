@@ -1,13 +1,17 @@
-! function () {
+!function() {
     "use strict";
     let angUrl = "libs/angular-1.7.2/";
     let routeUrls = "src/js/routes/";
     let ctrlUrls = "src/js/controllers/";
+    let t_ctrlUrls = "src/js/controllers/developer/tutorials/";
+    let a_ctrlUrls = "src/js/controllers/admin/";
     let consolectrlUrls = "src/js/controllers/developer/console/";
     let modelctrlUrls = "src/js/modalctrls/";
+    let bust = window.location.protocol === "https:" ? 3 : new Date().getTime();
+    console.info(bust);
     require.config({
         baseUrl: "sms-app",
-        urlArgs: "bust=" + new Date().getTime(),
+        urlArgs: "bust=" + bust,
         waitSeconds: 0,
         minify: true,
         paths: {
@@ -24,12 +28,14 @@
             ngTouch: angUrl + "angular-touch.min",
             loadbar: "libs/angular-loading-bar/build/loading-bar.min",
             quill: "libs/quill/quill",
-            "quill-image-resize": "libs/quill-image-resize-module/image-resize.min",
+            "quill-image-resize":
+                "libs/quill-image-resize-module/image-resize.min",
             "quill-image-drop": "libs/quill-image-drop-module/image-drop.min",
             ngQuill: "libs/ng-quill/src/ng-quill",
             "wiz.markdown": "libs/wizMarkdown/wizMarkdown",
             uib: "libs/js/ui-bootstrap-tpls-3.0.5.min",
-            "datetime-picker": "libs/bootstrap-ui-datetime-picker/dist/datetime-picker.min",
+            "datetime-picker":
+                "libs/bootstrap-ui-datetime-picker/dist/datetime-picker.min",
             "angular-ui-router": "libs/js/angular-ui-router.min",
             social: "libs/js/angularjs-social-login",
             toaster: "libs/angular-toaster/toaster.min",
@@ -42,8 +48,6 @@
             pusher: "libs/pusher/web/pusher.min",
             //lightbox
             bootstrapLightbox: "libs/lightbox/angular-bootstrap-lightbox.min",
-            //routes
-            pageRoutes: routeUrls + "pageRoutes",
             //services
             services: "src/js/services/services",
             user: "src/js/services/user",
@@ -72,6 +76,11 @@
             a_me2uCtrl: ctrlUrls + "admin/sms/a_me2uCtrl",
             adminQuoteCtrl: ctrlUrls + "admin/quotes/adminQuoteCtrl",
             adminQuotesCtrl: ctrlUrls + "admin/quotes/adminQuotesCtrl",
+            a_tutsCtrl: ctrlUrls + "admin/tutorials/a_tutsCtrl",
+            a_tutsAddCtrl: ctrlUrls + "admin/tutorials/a_tutsAddCtrl",
+            a_tutsEditCtrl: ctrlUrls + "admin/tutorials/a_tutsEditCtrl",
+            // 'a_tutsCtrl': ctrlUrls + "admin/tutorials/a_tutsCtrl",
+            // 'a_tutsCtrl': ctrlUrls + "admin/tutorials/a_tutsCtrl",
             //news
             newsCtrl: ctrlUrls + "admin/news/newsCtrl",
             //auth
@@ -81,11 +90,30 @@
             verifictionCtrl: ctrlUrls + "auth/verifictionCtrl",
             //account
             AccHomeCtrl: ctrlUrls + "account/AccHomeCtrl",
+            //developer
+            devMainCtrl: ctrlUrls + "developer/devMainCtrl",
+            devHomeCtrl: ctrlUrls + "developer/devHomeCtrl",
             //developer console
             createAppCtrl: consolectrlUrls + "createAppCtrl",
             myappsCtrl: consolectrlUrls + "myappsCtrl",
+            appDetCtrl: consolectrlUrls + "appDetCtrl",
             myappCtrl: consolectrlUrls + "myappCtrl",
-            myDomainsCtrl: consolectrlUrls + "myDomainsCtrl"
+            myDomainsCtrl: consolectrlUrls + "myDomainsCtrl",
+            myappSmsCtrl: consolectrlUrls + "myappSmsCtrl",
+            myappStatsCtrl: consolectrlUrls + "myappStatsCtrl",
+            //developer tutorials
+            tutorialsCtrl: t_ctrlUrls + "tutorialsCtrl",
+            tutorialDetCtrl: t_ctrlUrls + "tutorialDetCtrl",
+            // "": t_ctrlUrls + "",
+            //routes
+            pageRoutes: routeUrls + "pageRoutes",
+            adminRoutes: routeUrls + "adminRoutes",
+            devRoutes: routeUrls + "devRoutes",
+            eventsRoutes: routeUrls + "eventsRoutes",
+            quotesRoutes: routeUrls + "quotesRoutes",
+            newsRoutes: routeUrls + "newsRoutes",
+            blogRoutes: routeUrls + "blogRoutes",
+            aUserRoutes: routeUrls + "aUserRoutes"
         },
         shim: {
             jquery: {
@@ -103,11 +131,14 @@
                 exports: "Quill",
                 deps: ["angular"]
             },
-            // "quill-image-drop": {
-            //     exports: "ImageDrop",
-            //     deps: ["quill"]
-            // },
-            // "quill-image-resize": { exports: "ImageResize", deps: ["quill"] },
+            "quill-image-drop": {
+                exports: "ImageDrop",
+                deps: ["quill"]
+            },
+            "quill-image-resize": {
+                exports: "ImageResize",
+                deps: ["quill"]
+            },
             sanitize: ["angular"],
             animate: ["angular"],
             ngTouch: ["angular", "animate"],
@@ -125,8 +156,8 @@
                 "angular",
                 "sanitize",
                 "quill",
-                // "quill-image-drop",
-                // "quill-image-resize"
+                "quill-image-drop",
+                "quill-image-resize"
             ],
             social: ["angular"],
             loadbar: ["angular"],
@@ -149,15 +180,27 @@
                 "datetime-picker",
                 "bootstrapLightbox",
                 "wiz.markdown",
-                'quill',
+                "quill",
                 "ngQuill",
-                // "quill-image-drop",
+                "social",
+                "quill-image-drop"
                 // "quill-image-resize"
             ]
         }
     });
-    require(["app", "services", "user", "pageRoutes"], app => {
-
+    require([
+        "app",
+        "services",
+        "user",
+        "pageRoutes",
+        "adminRoutes",
+        "devRoutes",
+        "eventsRoutes",
+        "quotesRoutes",
+        "newsRoutes",
+        "blogRoutes",
+        "aUserRoutes"
+    ], app => {
         app.init();
         hideLoading();
     }, e => {

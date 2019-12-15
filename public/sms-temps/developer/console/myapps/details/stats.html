@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-{{stat.status}}" ng-repeat="stat in myapp.stats">
+                    <button class="btn btn-sm btn-danger float-right" ng-click="del_item(stat.id)">X</button>
+                    <span ng-bind-html="stat.message"></span>
+                </div>
+            </div>
+        </div>
+        <p class="py-3 text-center strong" ng-if="!myapp.stats">
+            No records to display!!
+        </p>
+    </div>
+</div>

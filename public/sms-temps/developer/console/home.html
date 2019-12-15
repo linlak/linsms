@@ -1,0 +1,54 @@
+<div class="row">
+    <div class="col-12">
+        <h3 class="text-center">Developer Console</h3>
+        <p>
+            LinSMS developer console is where you will set all of your integration parameters which includes,
+        </p>
+        <ol>
+            <li>Create App</li>
+            <li>View your apps</li>
+            <li>Edit your Apps</li>
+            <li>Get integration credentials</li>
+            <li>Add your Domain</li>
+            <li>Verify your domain</li>
+        </ol>
+
+        <p>
+            To know more on how to integrate into our system, you can read our <a ui-sref="tutorials.home"
+                class="card-link">Tutorials</a>
+        </p>
+        <h4>Definitions</h4>
+        <p><b>App:</b> This is the top most point of integration which anables you to integrate with LinSMS open Api.
+        </p>
+        <p>The App is composed of different components which include</p>
+        <p>
+            <b>ClientId:</b> This is a unique parameter that identifies your App on our system. It can be regenerated if
+            you feel it is licked or someone is trying to impersonate you.
+        </p>
+        <p>
+            <b>Secret: </b> This acts as your password. <span class="text-danger strong">This should never be shared or
+                used in insecure environments</span>. The secret can also be regenerate in case it is licked, <span
+                class="text-info">We recommend updating the secret every after two months.</span>
+
+        </p>
+        <p class="text-center">
+            <a ui-sref="console.app" class="btn btn-success">Create App</a>
+            <a ui-sref="console.apps" class="btn btn-primary">My Apps</a>
+
+        </p>
+        <p>
+            <b>Domain:</b>
+        </p>
+        <p class="text-center">
+            <a ui-sref="console.domains" class="btn btn-primary">My Domains</a>
+        </p>
+        <p>Our Api will help you to integrate the following services into your system/App</p>
+        <ol>
+            <li><b>SMS Api:</b> To send single or bulk SMS from your app or system.</li>
+            <li><b>Funds Transfer Api:</b> To enable online payment for mobile money and bank</li>
+            <li><b>Payout Api:</b> To enable cash withdrawals or sending money from our system to mobile money from your
+                system
+            </li>
+        </ol>
+    </div>
+</div>

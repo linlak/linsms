@@ -14,6 +14,7 @@ Route::prefix('my-app/{id}')->group(function () {
     Route::get('/edit', 'WebAppsController@appEdit');
     Route::get('/messages', 'WebAppsController@appMessages');
     Route::get('/message/{messageId}', 'WebAppsController@appMessage');
+    Route::get("/stats",  "WebAppsController@appStats");
 });
 Route::prefix('/edit-app')->group(function () {
     Route::post('', 'WebAppsController@update');
@@ -21,6 +22,7 @@ Route::prefix('/edit-app')->group(function () {
     Route::post('/secret', 'WebAppsController@editSecret');
 
     Route::post('/sms', 'WebAppsController@editSmsApi');
+    Route::post('/stats', 'WebAppsController@delStats');
     Route::post('/funds', 'WebAppsController@editFundsApi');
     Route::post('/payout', 'WebAppsController@editPayoutApi');
 });

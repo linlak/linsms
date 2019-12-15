@@ -27,6 +27,7 @@ trait RetrievesWebApps
                     'created_at' => $web_app->created_at->toDayDateTimeString(),
                     'updated_at' => $web_app->updated_at->toDayDateTimeString(),
                     'id' => encrypt($web_app->id),
+                    'ws_id' => $web_app->id
                 ];
             }
         }
@@ -59,6 +60,7 @@ trait RetrievesWebApps
             'created_at' => $web_app->created_at->copy()->timezone($this->my_location->getAttribute('timezone'))->toDayDateTimeString(),
             'updated_at' => $web_app->updated_at->copy()->timezone($this->my_location->getAttribute('timezone'))->toDayDateTimeString(),
             'id' => $id,
+            'ws_id' => $web_app->id,
             'c_id' => $web_app->client_id,
             's_key' => $web_app->secret,
             'app_conf' => [

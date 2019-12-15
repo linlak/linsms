@@ -1,12 +1,12 @@
 define(['angular', 'angular-ui-router'], function (angular) {
-    let app = angular.module('smsApp', ['ui.router', 'ngAnimate', 'ngSanitize', 'ngTouch', 'ui.bootstrap', /*'ngMaps',*/ 'chieffancypants.loadingBar', 'toaster', 'ngServices', 'ui.bootstrap.datetimepicker', 'bootstrapLightbox', 'wiz.markdown', 'ngQuill']);
+    let app = angular.module('smsApp', ['ui.router', 'ngAnimate', 'socialLogin', 'ngSanitize', 'ngTouch', 'ui.bootstrap', /*'ngMaps',*/ 'chieffancypants.loadingBar', 'toaster', 'ngServices', 'ui.bootstrap.datetimepicker', 'bootstrapLightbox', 'wiz.markdown', 'ngQuill']);
     app.constant('NG_QUILL_CONFIG', {
         /*
          * @NOTE: this config/output is not localizable.
          */
         modules: {
-            // imageResize: {},
-            // imageDrop: true,
+            imageResize: {},
+            imageDrop: true,
             toolbar: [
 
                 ['bold', 'italic', 'underline', 'strike'], // toggled buttons

@@ -49,16 +49,16 @@
 
                 </ul>
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item dropdown" ng-class="{'active':isActive('developer') }">
+                    <li class="nav-item dropdown" ng-class="{'active':isActive('events') }">
                         <a href="" data-toggle="dropdown" class="nav-link" role="button" aria-expanded="false"
                             aria-haspopup="true" class="dropdown-toggle">Events <span
                                 class="fa fa-caret-down"></span></a>
                         <ul class="dropdown-menu  bg-secondary">
                             <li ui-sref-active="active" class="nav-item" ng-if="isAdmin">
-                                <a class="nav-link" ui-sref="a_tuts.all">Manage</a>
+                                <a class="nav-link" ui-sref="a_events.all">Manage</a>
                             </li>
                             <li ui-sref-active="active" class="nav-item">
-                                <a class="nav-link" ui-sref="tutorials.home">Upcoming</a>
+                                <a class="nav-link" ui-sref="events.all">Upcoming</a>
                             </li>
                         </ul>
                     </li>
@@ -67,10 +67,10 @@
                             aria-haspopup="true" class="dropdown-toggle">Jobs <span class="fa fa-caret-down"></span></a>
                         <ul class="dropdown-menu  bg-secondary">
                             <li ui-sref-active="active" class="nav-item" ng-if="isAdmin">
-                                <a class="nav-link" ui-sref="a_news.all">Manage</a>
+                                <a class="nav-link" ui-sref="a_jobs.all">Manage</a>
                             </li>
                             <li ui-sref-active="active" class="nav-item">
-                                <a class="nav-link" ui-sref="news.all">Recent</a>
+                                <a class="nav-link" ui-sref="jobs.all">Recent</a>
                             </li>
                         </ul>
                     </li>

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Services\Traits\Relations\HasAdmin;
 use Illuminate\Database\Eloquent\Model;
 use App\Services\Traits\Relations\UserTrait;
 use App\Services\Traits\Relations\HasEasy;
@@ -10,7 +11,7 @@ use GeneaLabs\LaravelModelCaching\Traits\Cachable;
 class SmsPayment extends Model
 {
     //
-    use UserTrait, HasEasy, Cachable;
+    use UserTrait, HasEasy, Cachable, HasAdmin;
     protected $fillable = ['user_id', 'sms_count', 'sms_price', 'p_ref'];
     protected $append = ['remaining', 'total', 'is_current'];
 
@@ -30,10 +31,7 @@ class SmsPayment extends Model
     {
         return $this->hasOne(SmsPayment::class, 'c_to', 'id');
     }
-    public function admin()
-    {
-        return $this->belongsTo(Admin::class, 'admin_id', 'id');
-    }
+
     public function brought()
     {
         return $this->belongsTo(SmsPayment::class, 'b_frm', 'id');

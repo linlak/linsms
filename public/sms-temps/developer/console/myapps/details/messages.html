@@ -2,18 +2,18 @@
     <div class="card-text p-2 mt-2">
         <h3 class="text-center card-heading">{{myapp.app_name}}</h3>
         <h5 class="text-center my-3">
-            Recent SMS
+            Sent SMS
         </h5>
     </div>
     <div class="card-row">
-        <ul class="list-unstyled">
-            <li class="list-unstyled-item">
-                <b>Sender Id</b>
-                <b>SMS Used</b>
-                <b>SMS Sent</b>
-                <b>SMS Filed</b>
-                <b>SMS Length</b>
-            </li>
-        </ul>
+        <div class="list-group">
+            <div class="list-group-item hovable bg-info" ng-repeat="sms in myapp.sms">
+                <b>Sender Id</b>&nbsp;{{sms.sender_id}}&nbsp;
+                <b>SMS Used</b>&nbsp;{{sms.sent_sms}}&nbsp;
+                <b>SMS Sent</b>&nbsp;{{sms.sent_sms}}&nbsp;
+                <b>SMS Failed</b>&nbsp;{{sms.failed_sms}}&nbsp;
+                <b>SMS Length</b>&nbsp;{{sms.sms_len}}
+            </div>
+        </div>
     </div>
 </div>

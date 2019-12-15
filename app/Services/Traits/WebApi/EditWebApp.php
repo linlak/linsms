@@ -15,7 +15,8 @@ trait EditWebApp
         if (!is_null($web_app)) {
             $this->_setResults('web_app', [
                 'app_name' => $web_app->app_name,
-                'id' => encrypt($web_app->id)
+                'id' => encrypt($web_app->id),
+                'ws_id' => $web_app->id
             ]);
         }
         return $this->_showResult();
